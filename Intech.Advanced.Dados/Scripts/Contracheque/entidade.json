@@ -1,0 +1,15 @@
+﻿{
+    "nomeTabela": "FI_FICHA_FINANC_ASSISTIDO",
+    "colunasExtras": [
+        {
+            "nome": "DT_REFERENCIA",
+            "tipo": "DateTime",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "DS_RUBRICA",
+            "tipo": "string",
+            "aceitaNulo": false
+        }
+    ]
+}

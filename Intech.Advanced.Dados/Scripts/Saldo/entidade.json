@@ -1,0 +1,10 @@
+﻿{
+    "nomeTabela": "FI_FICHA_CONTRIB_PREVIDENCIAL",
+    "colunasExtras": [
+        {
+            "nome": "VL_RESGATE",
+            "tipo": "decimal",
+            "aceitaNulo": false
+        }
+    ]
+}

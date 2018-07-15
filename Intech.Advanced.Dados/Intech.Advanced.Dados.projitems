@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a963501f-4def-44bb-a578-ee1d002c986e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Intech.Advanced.Dados</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarDatasPorPlanoContratoTrabalho.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalho.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronograma.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\BuscarPorPlanoContratoTrabalho.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\BuscarPorCdPessoa.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndice.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndicePeriodo.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarUltimoPorCdIndice.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\ListarPorContratoTrabalho.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\ListarPorCpf.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\BuscarPorContratoTrabalhoPlanoPeriodo.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\BuscarPorContratoTrabalhoPlanoReferencia.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\BuscarUltimoPorContratoTrabalhoPlano.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarAutopatrocinioPorReferenciaAnterior.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarAutopatrocinioPorReferenciaApos.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarBrutoPorPlanoReferenciaPessoa.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarIndividualPorPlanoDataReferenciaPessoa.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarTaxaAdm.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Usuario\BuscarPorCPF.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Usuario\BuscarPorLoginSenha.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\Indice\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\Saldo\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\Usuario\entidade.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\ContrachequeDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\ContribuicaoDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\DadosPessoaisDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\IndiceDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\PlanoVinculadoDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\SalarioContribuicaoDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\SaldoDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\UsuarioDAO.cs" />
+  </ItemGroup>
+</Project>

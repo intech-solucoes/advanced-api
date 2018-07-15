@@ -1,0 +1,75 @@
+﻿{
+    "nomeTabela": "FI_CONTRATO_TRABALHO",
+    "colunasExtras": [
+        {
+            "nome": "NO_PESSOA",
+            "tipo": "string",
+            "aceitaNulo": false
+        },
+        {
+            "nome": "IR_SEXO",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "DS_SEXO",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "DT_NASCIMENTO",
+            "tipo": "DateTime",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NR_CPF",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "SIGLA_EMPRESA",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NR_CEP",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "DS_ENDERECO",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NR_ENDERECO",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "DS_COMPLEMENTO",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NO_BAIRRO",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NR_FONE",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NR_CELULAR",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "NO_EMAIL",
+            "tipo": "string",
+            "aceitaNulo": true
+        }
+    ]
+}

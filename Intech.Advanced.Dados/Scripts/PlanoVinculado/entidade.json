@@ -1,0 +1,35 @@
+﻿{
+    "nomeTabela": "FI_PLANO_VINCULADO",
+    "colunasExtras": [
+        {
+            "nome": "DS_PLANO_PREVIDENCIAL",
+            "tipo": "string",
+            "aceitaNulo": false
+        },
+        {
+            "nome": "DS_SIT_PLANO",
+            "tipo": "string",
+            "aceitaNulo": false
+        },
+        {
+            "nome": "DS_SIT_INSCRICAO",
+            "tipo": "string",
+            "aceitaNulo": false
+        },
+        {
+            "nome": "DS_MOT_SIT_PLANO",
+            "tipo": "string",
+            "aceitaNulo": false
+        },
+        {
+            "nome": "NR_CODIGO_CNPB",
+            "tipo": "string",
+            "aceitaNulo": true
+        },
+        {
+            "nome": "CD_INDICE_VALORIZACAO",
+            "tipo": "string",
+            "aceitaNulo": true
+        }
+    ]
+}

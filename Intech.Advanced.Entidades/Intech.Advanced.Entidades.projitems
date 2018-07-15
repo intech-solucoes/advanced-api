@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c64a8383-f3c7-477f-81f3-f7d8dcdf1397</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Intech.Advanced.Entidades</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ContrachequeEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ContribuicaoEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DadosPessoaisEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IndiceEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlanoVinculadoEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SalarioContribuicaoEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SaldoEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UsuarioEntidade.cs" />
+  </ItemGroup>
+</Project>

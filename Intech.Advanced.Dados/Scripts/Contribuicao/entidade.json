@@ -1,0 +1,15 @@
+﻿{
+    "nomeTabela": "FI_FICHA_CONTRIB_PREVIDENCIAL",
+    "colunasExtras": [
+        {
+            "nome": "DS_TIPO_COBRANCA",
+            "tipo": "string",
+            "aceitaNulo": false
+        },
+        {
+            "nome": "DS_TIPO_FUNDO",
+            "tipo": "string",
+            "aceitaNulo": false
+        }
+    ]
+}
