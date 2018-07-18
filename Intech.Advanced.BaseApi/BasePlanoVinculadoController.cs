@@ -22,5 +22,19 @@ namespace Intech.Advanced.BaseApi
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("porPlano/{plano}")]
+        [Authorize("Bearer")]
+        public IActionResult Get(int plano)
+        {
+            try
+            {
+                return Json(new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, plano));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

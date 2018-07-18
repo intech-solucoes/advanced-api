@@ -17,6 +17,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndice.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndicePeriodo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarUltimoPorCdIndice.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\BuscarPorContratoTrabalhoPlano.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\ListarPorContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\ListarPorCpf.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\BuscarPorContratoTrabalhoPlanoPeriodo.sql" />

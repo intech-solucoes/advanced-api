@@ -36,5 +36,27 @@ namespace Intech.Advanced.Negocio.Proxy
                 Portabilidade = (reservaIndividual * 2M) + autopatrocinio
             };
         }
+
+        public dynamic BuscarSaldoCD(DateTime DT_REFERENCIA, int SQ_CONTRATO_TRABALHO, int SQ_PLANO_PREVIDENCIAL, int CD_PESSOA)
+        {
+            var saldoIndividual = base.BuscarIndividualPorPlanoDataReferenciaPessoa(DateTime.Now, SQ_PLANO_PREVIDENCIAL, CD_PESSOA, "E");
+            var saldoPatronal = base.BuscarIndividualPorPlanoDataReferenciaPessoa(DateTime.Now, SQ_PLANO_PREVIDENCIAL, CD_PESSOA, "D");
+
+            var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SQ_CONTRATO_TRABALHO, SQ_PLANO_PREVIDENCIAL);
+
+            var indice = new IndiceProxy().BuscarPorCdIndice(plano.CD_INDICE_VALORIZACAO);
+
+            var valorContribIndividalAtualizado = saldoIndividual.QT_COTA_CONTRIBUICAO.Value * indice.First().VL_INDICE.Value;
+            var valorContribPatronalAtualizado = saldoPatronal.QT_COTA_CONTRIBUICAO.Value * indice.First().VL_INDICE.Value;
+            var valorTotal = valorContribIndividalAtualizado + valorContribPatronalAtualizado;
+
+            return new
+            {
+                SaldoIndividual = saldoIndividual.VL_CONTRIBUICAO.Value,
+                SaldoPatronal = saldoPatronal.VL_CONTRIBUICAO.Value,
+                Total = valorTotal,
+                Rentabilidade = valorTotal - (saldoIndividual.VL_CONTRIBUICAO.Value + saldoPatronal.VL_CONTRIBUICAO.Value)
+            };
+        }
     }
 }

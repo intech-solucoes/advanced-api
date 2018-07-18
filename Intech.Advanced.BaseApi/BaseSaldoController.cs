@@ -10,14 +10,13 @@ namespace Intech.Advanced.BaseApi
 {
     public class BaseSaldoController : BaseController
     {
-        [HttpGet("individualPorPlanoIrTipoDataReferencia/{SQ_PLANO_PREVIDENCIAL}/{IR_TIPO}/{DT_REFERENCIA}")]
+        [HttpGet("saldoBD")]
         [Authorize("Bearer")]
-        public IActionResult GetIndividualPorPlanoDataReferenciaPessoa(int SQ_PLANO_PREVIDENCIAL, string IR_TIPO, string DT_REFERENCIA)
+        public IActionResult GetSaldoBD()
         {
             try
             {
-                var dtReferencia = DateTime.ParseExact(DT_REFERENCIA, "dd.MM.yyyy", new CultureInfo("pt-BR"));
-                return Json(new SaldoProxy().BuscarIndividualPorPlanoDataReferenciaPessoa(dtReferencia, SQ_PLANO_PREVIDENCIAL, CdPessoa, IR_TIPO));
+                return Json((new SaldoProxy().BuscarSaldoBD(DateTime.Now, SqContratoTrabalho, 1, CdPessoa)));
             }
             catch (Exception ex)
             {
@@ -25,14 +24,13 @@ namespace Intech.Advanced.BaseApi
             }
         }
 
-        [HttpGet("saldoBD/{SQ_PLANO_PREVIDENCIAL}/{DT_REFERENCIA}")]
+        [HttpGet("saldoCD")]
         [Authorize("Bearer")]
-        public IActionResult GetSaldoBD(int SQ_PLANO_PREVIDENCIAL, string DT_REFERENCIA)
+        public IActionResult GetSaldoCD()
         {
             try
             {
-                var dtReferencia = DateTime.ParseExact(DT_REFERENCIA, "dd.MM.yyyy", new CultureInfo("pt-BR"));
-                return Json((new SaldoProxy().BuscarSaldoBD(dtReferencia, SqContratoTrabalho, SQ_PLANO_PREVIDENCIAL, CdPessoa)));
+                return Json(new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, 3, CdPessoa));
             }
             catch (Exception ex)
             {
@@ -42,7 +40,7 @@ namespace Intech.Advanced.BaseApi
 
         [HttpGet("brutoPorPlanoDataReferencia/{SQ_PLANO_PREVIDENCIAL}/{DT_REFERENCIA}")]
         [Authorize("Bearer")]
-        public IActionResult GetIndividualPorPlanoDataReferenciaPessoa(int SQ_PLANO_PREVIDENCIAL, string DT_REFERENCIA)
+        public IActionResult GetBrutoPorPlanoDataReferenciaPessoa(int SQ_PLANO_PREVIDENCIAL, string DT_REFERENCIA)
         {
             try
             {
