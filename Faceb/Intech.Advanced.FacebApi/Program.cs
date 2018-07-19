@@ -19,6 +19,8 @@ namespace Intech.Advanced.FacebApi
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                //.UseUrls("http://localhost:5000", "http://192.168.25.34:5000")
+                .UseUrls("http://localhost:5000", "http://10.10.170.25:5000")
                 .UseStartup<Startup>();
     }
 }

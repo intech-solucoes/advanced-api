@@ -11,5 +11,7 @@
         public const string DadosPessoais = "api/dadosPessoais";
         public const string Contribuicao = "api/contribuicao";
         public const string Contracheque = "api/contracheque";
+        public const string SimuladorBD = "api/simuladorBD";
+        public const string SimuladorCD = "api/simuladorCD";
     }
 }
