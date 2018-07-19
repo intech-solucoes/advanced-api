@@ -43,7 +43,7 @@ namespace Intech.Advanced.BaseApi
         {
             try
             {
-                return Json(new ContrachequeProxy().BuscarPorPlanoContratoTrabalhoCronograma(SqContratoTrabalho, plano, cronograma));
+                return Json(new ContrachequeProxy().BuscarRubricasPorPlanoContratoTrabalhoCronograma(SqContratoTrabalho, plano, cronograma));
             }
             catch (Exception ex)
             {
