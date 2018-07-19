@@ -12,6 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ContrachequeEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ContribuicaoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DadosPessoaisEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DependenteEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FatorAtuarialMortalidadeEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FatorValidadeEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IndiceEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlanoVinculadoEntidade.cs" />

@@ -14,6 +14,9 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronograma.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\BuscarPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\BuscarPorCdPessoa.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Dependente\BuscarDependentePorContratoTrabalhoDtValidadeTipo.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorIdade.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorIdadePartIdadeDep.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\BuscarUltimo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndice.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndicePeriodo.sql" />
@@ -36,6 +39,8 @@
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\Dependente\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Indice\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\entidade.json" />
@@ -47,6 +52,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ContrachequeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ContribuicaoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\DadosPessoaisDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\DependenteDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\FatorAtuarialMortalidadeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\FatorValidadeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\IndiceDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\PlanoVinculadoDAO.cs" />
