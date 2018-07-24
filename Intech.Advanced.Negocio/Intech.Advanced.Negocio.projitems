@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\DependenteProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\FatorAtuarialMortalidadeProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\FatorValidadeProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Proxy\HistManutContribuicaoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\IndiceProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\PlanoVinculadoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\SalarioContribuicaoProxy.cs" />

@@ -18,6 +18,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorIdade.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorIdadePartIdadeDep.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\BuscarUltimo.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\HistManutContribuicao\BuscarUltimoPorContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndice.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndicePeriodo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarUltimoPorCdIndice.sql" />
@@ -42,6 +43,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Dependente\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\HistManutContribuicao\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Indice\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\entidade.json" />
@@ -55,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DAO\DependenteDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\FatorAtuarialMortalidadeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\FatorValidadeDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\HistManutContribuicaoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\IndiceDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\PlanoVinculadoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\SalarioContribuicaoDAO.cs" />

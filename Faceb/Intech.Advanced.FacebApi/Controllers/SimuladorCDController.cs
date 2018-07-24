@@ -33,10 +33,15 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var salarioContribuicao = new SalarioContribuicaoProxy().BuscarPorContratoTrabalhoPlanoReferencia(SqContratoTrabalho, sqPlano, dataReferencia);
                 var salarioParticipacao = salarioContribuicao.VL_BASE_FUNDACAO;
 
+                // Busca o percentual de contribuição
+                var percentualContribuicao = new HistManutContribuicaoProxy().BuscarUltimoPorContratoTrabalho(SqContratoTrabalho);
+                var percentual = percentualContribuicao.VL_COEF_TAXA;
+
                 return Json(new
                 {
                     dataReferencia,
-                    salarioParticipacao
+                    salarioParticipacao,
+                    percentual
                 });
             }
             catch (Exception ex)
