@@ -23,6 +23,7 @@ namespace Intech.Advanced.Entidades
 		public int? SQ_TIPO_DEPENDENTE { get; set; }
 		public string EE_SALARIO_FAMILIA { get; set; }
 		public string EE_DESIGNADO { get; set; }
+		public DateTime DT_NASCIMENTO { get; set; }
         
     }
 }

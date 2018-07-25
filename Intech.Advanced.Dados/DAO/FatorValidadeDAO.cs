@@ -15,12 +15,20 @@ namespace Intech.Advanced.Dados.DAO
         
 		public virtual FatorValidadeEntidade BuscarUltimo()
 		{
-			if(AppSettings.IS_SQL_SERVER_PROVIDER)
-				return Conexao.QuerySingleOrDefault<FatorValidadeEntidade>("SELECT TOP 1 * FROM FI_FATOR_VALIDADE ORDER BY DT_VALIDADE DESC", new {  });
-			else if(AppSettings.IS_ORACLE_PROVIDER)
-				return Conexao.QuerySingleOrDefault<FatorValidadeEntidade>("SELECT * FROM FI_FATOR_VALIDADE WHERE ROWNUM <= 1  ORDER BY DT_VALIDADE DESC", new {  });
-			else
-				throw new Exception("Provider não suportado!");
+			try
+			{
+				if(AppSettings.IS_SQL_SERVER_PROVIDER)
+					return Conexao.QuerySingleOrDefault<FatorValidadeEntidade>("SELECT TOP 1 * FROM FI_FATOR_VALIDADE ORDER BY DT_VALIDADE DESC", new {  });
+				else if(AppSettings.IS_ORACLE_PROVIDER)
+					return Conexao.QuerySingleOrDefault<FatorValidadeEntidade>("SELECT * FROM FI_FATOR_VALIDADE WHERE ROWNUM <= 1  ORDER BY DT_VALIDADE DESC", new {  });
+				else
+					throw new Exception("Provider não suportado!");
+			}
+			finally
+			{
+				Conexao.Close();
+			}
 		}
+
     }
 }
