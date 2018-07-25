@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Advanced.FacebApi", "Faceb\Intech.Advanced.FacebApi\Intech.Advanced.FacebApi.csproj", "{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intech.Advanced.FacebApi", "Faceb\Intech.Advanced.FacebApi\Intech.Advanced.FacebApi.csproj", "{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Intech.Advanced.BaseApi", "Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.shproj", "{A28402BE-2D64-43BF-88E1-4DD91719BD56}"
 EndProject

@@ -15,13 +15,15 @@ namespace Intech.Advanced.FacebApi.Controllers
     [ApiController]
     public class SimuladorBDController : BaseController
     {
-        [HttpGet("{sqPlano}")]
+        [HttpGet]
         [Authorize("Bearer")]
-        public IActionResult Get(int sqPlano)
+        public IActionResult Get()
         {
             try
             {
                 //TODO: Jogar pra proxy
+
+                var sqPlano = 1;
 
                 int idadeParticipante = CalcularIdadeParticipante();
                 int idadeMinima = CalcularIdadeMinima(idadeParticipante);
@@ -43,12 +45,14 @@ namespace Intech.Advanced.FacebApi.Controllers
             }
         }
 
-        [HttpGet("{sqPlano}/simular")]
+        [HttpGet("simular")]
         [Authorize("Bearer")]
-        public IActionResult GetSimulacao(int sqPlano)
+        public IActionResult GetSimulacao()
         {
             try
             {
+                var sqPlano = 1;
+
                 int idadeParticipante = CalcularIdadeParticipante();
                 int idadeMinima = CalcularIdadeMinima(idadeParticipante);
                 decimal SRC = CalcularSRC(sqPlano);
@@ -62,7 +66,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO;
                 var dataAposentadoria = dataNascimento.Value.AddYears(idadeMinima);
                 var dataReferencia = DateTime.Now;
-                
+
                 return Json(new
                 {
                     valorSuplementacao,
@@ -76,14 +80,16 @@ namespace Intech.Advanced.FacebApi.Controllers
             }
         }
 
-        private int CalcularIdadeParticipante()
+        #region Métodos Privados
+
+        int CalcularIdadeParticipante()
         {
             var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
             var idadeParticipante = new Intervalo(DateTime.Now, dadosPessoais.DT_NASCIMENTO.Value, new CalculoAnosMesesDiasAlgoritmo2()).Anos;
             return idadeParticipante;
         }
 
-        private int CalcularIdadeMinima(int idadeParticipante)
+        int CalcularIdadeMinima(int idadeParticipante)
         {
             var idadeMinima = 55;
 
@@ -93,14 +99,14 @@ namespace Intech.Advanced.FacebApi.Controllers
             return idadeMinima;
         }
 
-        private decimal CalcularSRC(int sqPlano)
+        decimal CalcularSRC(int sqPlano)
         {
             var salarioContrib = new SalarioContribuicaoProxy().BuscarUltimoPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
             var SRC = salarioContrib.VL_BASE_FUNDACAO.Value;
             return SRC;
         }
 
-        private decimal CalcularINSSHipotetico(int sqPlano)
+        decimal CalcularINSSHipotetico(int sqPlano)
         {
             var indiceProxy = new IndiceProxy();
 
@@ -146,12 +152,14 @@ namespace Intech.Advanced.FacebApi.Controllers
             return inssHipotetico;
         }
 
-        private int CalcularCarencia(int sqPlano)
+        int CalcularCarencia(int sqPlano)
         {
             var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
             var idadePlano = new Intervalo(DateTime.Now, plano.DT_INSC_PLANO, new CalculoAnosMesesDiasAlgoritmo2()).Anos;
             var carencia = Math.Min(idadePlano, 15);
             return carencia;
         }
+
+        #endregion
     }
 }
