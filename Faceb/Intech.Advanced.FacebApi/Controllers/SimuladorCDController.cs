@@ -110,8 +110,8 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var valorSaque = dados.saque == "N" ? 0 : valorFuturo / 100 * Convert.ToInt32(dados.saque);
 
                 // Dependentes
-                DateTime dataNascDependente;
-                int? idadeDependente = null;
+                DateTime? dataNascDependente = null;
+                var idadeDependente = 0;
                 var dependenteProxy = new DependenteProxy();
                 var dependenteVitalicio = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "V", dataAposentadoria);
 
@@ -120,11 +120,13 @@ namespace Intech.Advanced.FacebApi.Controllers
                 else
                 {
                     var dependenteTemporario = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "T", dataAposentadoria);
-                    dataNascDependente = dependenteTemporario.DT_NASCIMENTO;
+
+                    if(dependenteTemporario != null)
+                        dataNascDependente = dependenteTemporario.DT_NASCIMENTO;
                 }
 
                 if(dataNascDependente != null)
-                    idadeDependente = new Intervalo(dataAposentadoria, dataNascDependente).Anos;
+                    idadeDependente = new Intervalo(dataAposentadoria, dataNascDependente.Value).Anos;
                 
                 // Fator atuarial
                 var fatorAtuarialProxy = new FatorAtuarialMortalidadeProxy();
@@ -132,15 +134,15 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var axiDep = 0M;
                 var axyi = 0M;
-                if (idadeDependente != null)
+                if (idadeDependente > 0)
                 {
-                    axiDep = fatorAtuarialProxy.BuscarPorIdade(idadeDependente.Value).VL_FATOR_A.Value;
-                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDep(idadeAposentadoria, idadeDependente.Value);
+                    axiDep = fatorAtuarialProxy.BuscarPorIdade(idadeDependente).VL_FATOR_A.Value;
+                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDep(idadeAposentadoria, idadeDependente);
                     axyi = fator.VL_FATOR_A.Value;
                 }
 
-                var fatorAtuarialPensaoMorte = 13 * axyi;
                 var fatorAtuarialSemPensaoMorte = 13 * axiPar;
+                var fatorAtuarialPensaoMorte = axyi > 0 ? 13 * axyi : fatorAtuarialSemPensaoMorte;
 
                 // Renda por prazos indeterminados
                 var rendaPrazoIndeterminadoPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialPensaoMorte;
