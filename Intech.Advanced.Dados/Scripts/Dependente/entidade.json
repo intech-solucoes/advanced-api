@@ -1,3 +1,10 @@
 ﻿{
-    "nomeTabela": "FI_DEPENDENTE"
+    "nomeTabela": "FI_DEPENDENTE",
+    "colunasExtras": [
+        {
+            "nome": "DT_NASCIMENTO",
+            "tipo": "DateTime",
+            "aceitaNulo": false
+        }
+    ]
 }
