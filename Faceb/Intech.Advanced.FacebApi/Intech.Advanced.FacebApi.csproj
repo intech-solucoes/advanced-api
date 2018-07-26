@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper.Contrib" Version="1.50.5" />
+    <PackageReference Include="MailKit" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.12.0-beta2" />
   </ItemGroup>
