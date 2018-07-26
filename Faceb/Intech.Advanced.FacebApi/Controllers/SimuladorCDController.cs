@@ -91,7 +91,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 decimal contribBasica = Convert.ToDecimal(dados.contribBasica, new CultureInfo("pt-BR"));
                 decimal contribFacultativa = Convert.ToDecimal(dados.contribFacultativa, new CultureInfo("pt-BR"));
 
-                var saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
+                decimal saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
 
                 var dataAtual = DateTime.Now.PrimeiroDiaDoMes();
@@ -101,10 +101,27 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
                 var contribBruta = contribBasica * 2 + contribFacultativa;
                 var taxaMensal = BuscarTaxaMensal(taxaJuros);
-                var meses = new Intervalo(dataAposentadoria, dataAtual).Meses;
+                //var diferenca = new Intervalo(dataAposentadoria, dataAtual, new CalculoAnosMesesDiasAlgoritmo2());
+                //var meses = diferenca.TotalMeses;
 
                 // Saldo futuro
-                var valorFuturo = (decimal)saldo * (decimal)Math.Pow((double)(1 + taxaMensal), meses) + (decimal)contribBruta * ((decimal)Math.Pow((double)(1 + taxaMensal), meses) - 1) / (decimal)taxaMensal;
+                //var x1 = (decimal)Math.Pow((double)(1 + taxaMensal), meses);
+                //var saldoFuturoCorrigido = saldo * x1;
+                //var mensalidadeCorrigida = contribBruta * (x1 - 1) / taxaMensal;
+
+                var valorFuturo = saldo;
+
+                while (data <= dataAposentadoria)
+                {
+                    var contribMensal = contribBruta;
+
+                    if (data.Month == 12)
+                        contribMensal *= 2;
+
+                    valorFuturo = (valorFuturo + (valorFuturo * taxaMensal / 100)) + contribMensal;
+
+                    data = data.AddMonths(1);
+                }
 
                 // Valor do saque
                 var valorSaque = dados.saque == "N" ? 0 : valorFuturo / 100 * Convert.ToInt32(dados.saque);

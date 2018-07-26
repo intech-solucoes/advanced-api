@@ -20,7 +20,7 @@ namespace Intech.Advanced.Negocio.Proxy
                     bruto,
                     descontos,
                     liquido,
-                    referencia = rubricas.First().DT_REFERENCIA.Value.ToString("dd/MM/yyyy")
+                    referencia = rubricas.First().DT_REFERENCIA.Value.ToString("MM/yyyy")
                 }
             };
         }
