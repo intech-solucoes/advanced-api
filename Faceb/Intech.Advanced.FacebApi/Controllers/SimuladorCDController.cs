@@ -61,14 +61,24 @@ namespace Intech.Advanced.FacebApi.Controllers
                 //TODO: Jogar pra proxy
 
                 var sqPlano = 3;
+                var idadeMinimaAposentadoria = 48;
+                var idadeMaximaAposentadoria = 70;
 
                 var saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
 
+                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO.Value;
+                var idadeParticipante = new Intervalo(DateTime.Now, dataNascimento).Anos;
+
+                if (idadeParticipante > 48)
+                    idadeMinimaAposentadoria = idadeParticipante;
+
                 return Json(new
                 {
                     saldo,
-                    taxaJuros
+                    taxaJuros,
+                    idadeMinimaAposentadoria,
+                    idadeMaximaAposentadoria
                 });
             }
             catch (Exception ex)
