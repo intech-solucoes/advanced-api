@@ -111,7 +111,7 @@ namespace Intech.Advanced.FacebApi.Controllers
             var indiceProxy = new IndiceProxy();
 
             var dtFim = DateTime.Now.AddMonths(-1).DefinirDia(1);
-            var dtIni = dtFim.AddMonths(-35);
+            var dtIni = dtFim.AddMonths(-36);
 
             var indiceINPC = indiceProxy.BuscarPorCdIndicePeriodo("INPC", dtIni, dtFim);
 
@@ -121,7 +121,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 
             foreach (var indice in indiceINPC)
             {
-                var fator = fatorAnterior * (1 + indice.VL_INDICE.Value / 100);
+                var fator = (fatorAnterior * (1 + indice.VL_INDICE.Value / 100)).Arredonda(6);
                 fatores.Add(new KeyValuePair<DateTime, decimal>(indice.DT_INIC_VALIDADE, fator));
                 fatorAnterior = fator;
             }

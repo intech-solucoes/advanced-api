@@ -17,6 +17,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Dependente\BuscarDependentePorContratoTrabalhoDtValidadeTipo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorIdade.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorIdadePartIdadeDep.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorTabelaIdade.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\BuscarUltimo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\HistManutContribuicao\BuscarUltimoPorContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndice.sql" />

@@ -32,7 +32,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var dataReferencia = contribuicoes.First().DT_REFERENCIA;
 
                 // Busca o salário de participação
-                var salarioContribuicao = new SalarioContribuicaoProxy().BuscarPorContratoTrabalhoPlanoReferencia(SqContratoTrabalho, sqPlano, dataReferencia);
+                var salarioContribuicao = new SalarioContribuicaoProxy().BuscarUltimoPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
                 var salarioParticipacao = salarioContribuicao.VL_BASE_FUNDACAO;
 
                 // Busca o percentual de contribuição
@@ -137,23 +137,27 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var valorSaque = dados.saque == "N" ? 0 : valorFuturo / 100 * Convert.ToInt32(dados.saque);
 
                 // Dependentes
-                DateTime? dataNascDependente = null;
                 var idadeDependente = 0;
+                var idadeDependenteTemporario = 0;
                 var dependenteProxy = new DependenteProxy();
+
+                // Dependente vitalício
                 var dependenteVitalicio = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "V", dataAposentadoria);
 
                 if (dependenteVitalicio != null)
-                    dataNascDependente = dependenteVitalicio.DT_NASCIMENTO;
-                else
                 {
-                    var dependenteTemporario = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "T", dataAposentadoria);
-
-                    if(dependenteTemporario != null)
-                        dataNascDependente = dependenteTemporario.DT_NASCIMENTO;
+                    var dataNascDependente = dependenteVitalicio.DT_NASCIMENTO;
+                    idadeDependente = new Intervalo(dataAposentadoria, dataNascDependente).Anos;
                 }
 
-                if(dataNascDependente != null)
-                    idadeDependente = new Intervalo(dataAposentadoria, dataNascDependente.Value).Anos;
+                // Dependente temporário
+                var dependenteTemporario = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "T", dataAposentadoria);
+
+                if (dependenteTemporario != null)
+                {
+                    var dataNascDependenteTemporario = dependenteTemporario.DT_NASCIMENTO;
+                    idadeDependenteTemporario = new Intervalo(dataAposentadoria, dataNascDependenteTemporario).Anos;
+                }
                 
                 // Fator atuarial
                 var fatorAtuarialProxy = new FatorAtuarialMortalidadeProxy();
@@ -168,9 +172,21 @@ namespace Intech.Advanced.FacebApi.Controllers
                     axyi = fator.VL_FATOR_A.Value;
                 }
 
-                var fatorAtuarialSemPensaoMorte = 13 * axiPar;
-                var fatorAtuarialPensaoMorte = axyi > 0 ? 13 * axyi : fatorAtuarialSemPensaoMorte;
+                var prazoDepentendeTemporario = 20 - idadeDependenteTemporario;
+                var xn = idadeAposentadoria + prazoDepentendeTemporario;
 
+                var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", xn).VL_FATOR_B.Value;
+                var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", idadeAposentadoria).VL_FATOR_B.Value;
+
+                var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdade("ax", xn).VL_FATOR_A.Value;
+
+                var fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
+
+                var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
+
+                var fatorAtuarialSemPensaoMorte = 13 * axiPar;
+                var fatorAtuarialPensaoMorte = 13 * (axiPar + Math.Max(fatorAn - apuracaoAxn, axiDep - axyi));
+                
                 // Renda por prazos indeterminados
                 var rendaPrazoIndeterminadoPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialPensaoMorte;
                 var rendaPrazoIndeterminadoSemPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialSemPensaoMorte;
