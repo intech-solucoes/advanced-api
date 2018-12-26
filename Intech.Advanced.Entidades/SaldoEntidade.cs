@@ -23,7 +23,7 @@ namespace Intech.Advanced.Entidades
 		public int IR_LANCAMENTO { get; set; }
 		public int? ID_CONTRIBUICAO { get; set; }
 		public int? SQ_ORIGEM { get; set; }
-		public decimal VL_RESGATE { get; set; }
+		[Write(false)] public decimal VL_RESGATE { get; set; }
         
     }
 }

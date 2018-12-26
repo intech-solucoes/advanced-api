@@ -1,5 +1,6 @@
 ﻿#region Usings
 using Intech.Advanced.BaseApi;
+using Intech.Advanced.Negocio.Proxy;
 using Intech.Lib.Util.Email;
 using Intech.Lib.Web;
 using Intech.Lib.Web.Entidades;
@@ -12,7 +13,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 {
     [Route(RotasApi.Relacionamento)]
     [ApiController]
-    public class RelacionamentoController : ControllerBase
+    public class RelacionamentoController : BaseController
     {
         [HttpPost]
         [Authorize("Bearer")]
@@ -20,8 +21,13 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
+                var usuario = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
                 var emailConfig = AppSettings.Get().Email;
-                EnvioEmail.Enviar(emailConfig, relacionamentoEntidade.Email, $"Faceb - {relacionamentoEntidade.Assunto}", relacionamentoEntidade.Mensagem);
+                var corpoEmail = 
+                    $"Nome: {usuario.NO_PESSOA}<br/>" +
+                    $"E-mail: {relacionamentoEntidade.Email}<br/>" +
+                    $"Mensagem: {relacionamentoEntidade.Mensagem}";
+                EnvioEmail.Enviar(emailConfig, emailConfig.EmailRelacionamento, $"Faceb - {relacionamentoEntidade.Assunto}", corpoEmail);
                 return Ok();
             }
             catch (Exception ex)

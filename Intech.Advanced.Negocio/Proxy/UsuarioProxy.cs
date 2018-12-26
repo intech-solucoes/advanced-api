@@ -15,8 +15,8 @@ namespace Intech.Advanced.Negocio.Proxy
             var user = base.BuscarPorCPF(USR_LOGIN);
 
             // Concatena o USR_CODIGO com a senha e encripta utilizando MD5
-            //var senha = GerarHashMd5(user.USR_CODIGO + USR_SENHA);
-            var senha = GerarHashMd5(3352 + USR_SENHA);
+            var senha = GerarHashMd5(user.USR_CODIGO + USR_SENHA);
+            //var senha = GerarHashMd5(3352 + USR_SENHA);
 
             return base.BuscarPorLoginSenha(USR_LOGIN, senha);
         }

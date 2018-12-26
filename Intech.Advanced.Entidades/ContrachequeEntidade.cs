@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 
@@ -21,8 +21,8 @@ namespace Intech.Advanced.Entidades
 		public int? NR_PARCELA { get; set; }
 		public int? QT_PARCELA { get; set; }
 		public string IR_LANCAMENTO { get; set; }
-		public DateTime? DT_REFERENCIA { get; set; }
-		public string DS_RUBRICA { get; set; }
+		[Write(false)] public DateTime? DT_REFERENCIA { get; set; }
+		[Write(false)] public string DS_RUBRICA { get; set; }
         
     }
 }
