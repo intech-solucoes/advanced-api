@@ -235,5 +235,155 @@ namespace Intech.Advanced.FacebApi.Controllers
             var valor = taxaAnual / 100 + 1;
             return (decimal)(Math.Pow((double)valor, (double)mensal) - 1) * 100;
         }
+
+        [HttpPost("simularNaoParticipante")]
+        public IActionResult GetSimulacaoNaoParticipante([FromBody] dynamic dados)
+        {
+            try
+            {
+                int idadeAposentadoria = Convert.ToInt32(dados.idadeAposentadoria);
+                decimal contribBasica = Convert.ToDecimal(dados.contribBasica, new CultureInfo("pt-BR"));
+                decimal contribFacultativa = Convert.ToDecimal(dados.contribFacultativa, new CultureInfo("pt-BR"));
+
+                /// decimal saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
+                decimal taxaJuros = dados.taxaJuros;
+
+                var dataAtual = DateTime.Now.PrimeiroDiaDoMes();
+                DateTime dataNascimento = dados.dataNascimento;
+                /// var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO.Value;
+
+                var dataAposentadoria = dataNascimento.AddYears(idadeAposentadoria);
+                var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
+                var contribBruta = contribBasica * 2 + contribFacultativa;
+                var taxaMensal = BuscarTaxaMensal(taxaJuros);
+                //var diferenca = new Intervalo(dataAposentadoria, dataAtual, new CalculoAnosMesesDiasAlgoritmo2());
+                //var meses = diferenca.TotalMeses;
+
+                // Saldo futuro
+                //var x1 = (decimal)Math.Pow((double)(1 + taxaMensal), meses);
+                //var saldoFuturoCorrigido = saldo * x1;
+                //var mensalidadeCorrigida = contribBruta * (x1 - 1) / taxaMensal;
+
+                decimal valorFuturo = 0;
+
+                while (data <= dataAposentadoria)
+                {
+                    var contribMensal = contribBruta;
+
+                    if (data.Month == 12)
+                        contribMensal *= 2;
+
+                    valorFuturo = (valorFuturo + (valorFuturo * taxaMensal / 100)) + contribMensal;
+
+                    data = data.AddMonths(1);
+                }
+
+                // Valor do saque
+                decimal valorSaque = dados.saque;
+
+                // Dependentes
+                var idadeDependente = 0;
+                var idadeDependenteTemporario = 0;
+                var dependenteProxy = new DependenteProxy();
+
+                // Dependente vitalício
+                var dataNascConjugue = dados.nascimentoConjugue;
+                var dataNascFilhoInvalido = dados.nascimentoFilhoInvalido;
+                DateTime? dataNascDependente;
+
+                if (dataNascConjugue != string.Empty && dataNascFilhoInvalido != string.Empty)
+                    dataNascDependente = dataNascConjugue > dataNascFilhoInvalido ? dataNascConjugue : dataNascFilhoInvalido;
+                else if (dataNascConjugue != string.Empty && dataNascFilhoInvalido == string.Empty)
+                    dataNascDependente = dataNascConjugue;
+                else
+                    dataNascDependente = dataNascFilhoInvalido == string.Empty ? null : dataNascFilhoInvalido;
+
+                /// var dependenteVitalicio = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "V", dataAposentadoria);
+
+                if (dataNascDependente != null)
+                {
+                    // dataNascDependente = Convert.ToDateTime(dataNascDependente);
+                    idadeDependente = new Intervalo(dataAposentadoria, dataNascDependente.Value).Anos;
+                }
+
+                // Dependente temporário
+                DateTime? dataNascDependenteTemporario = dados.nascimentoFilhoMaisNovo == string.Empty ? null : dados.nascimentoFilhoMaisNovo;
+                /// var dependenteTemporario = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "T", dataAposentadoria);
+
+                if (dataNascDependenteTemporario != null)
+                {
+                    idadeDependenteTemporario = new Intervalo(dataAposentadoria, dataNascDependenteTemporario.Value).Anos;
+                }
+
+                // Fator atuarial
+                var fatorAtuarialProxy = new FatorAtuarialMortalidadeProxy();
+                var axiPar = fatorAtuarialProxy.BuscarPorIdade(idadeAposentadoria).VL_FATOR_A.Value;
+
+                var axiDep = 0M;
+                var axyi = 0M;
+                if (idadeDependente > 0)
+                {
+                    axiDep = fatorAtuarialProxy.BuscarPorIdade(idadeDependente).VL_FATOR_A.Value;
+                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDep(idadeAposentadoria, idadeDependente);
+                    axyi = fator.VL_FATOR_A.Value;
+                }
+
+                var prazoDepentendeTemporario = 20 - idadeDependenteTemporario;
+                var xn = idadeAposentadoria + prazoDepentendeTemporario;
+
+                var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", xn).VL_FATOR_B.Value;
+                var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", idadeAposentadoria).VL_FATOR_B.Value;
+
+                var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdade("ax", xn).VL_FATOR_A.Value;
+
+                var fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
+
+                var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
+
+                var fatorAtuarialSemPensaoMorte = 13 * axiPar;
+                var fatorAtuarialPensaoMorte = 13 * (axiPar + Math.Max(fatorAn - apuracaoAxn, axiDep - axyi));
+
+                // Renda por prazos indeterminados
+                var rendaPrazoIndeterminadoPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialPensaoMorte;
+                var rendaPrazoIndeterminadoSemPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialSemPensaoMorte;
+
+                // Renda por prazo certo
+                var listaPrazos = new List<KeyValuePair<int, decimal>>();
+
+                for (int prazo = 15; prazo <= 25; prazo++)
+                {
+                    decimal valor = (valorFuturo - valorSaque) / (prazo * 13);
+                    listaPrazos.Add(new KeyValuePair<int, decimal>(prazo, valor));
+                }
+
+                // Renda por percentual do saldo de contas
+                var listaSaldoPercentuais = new List<KeyValuePair<string, decimal>>();
+
+                for (decimal percentual = 0.5M; percentual <= 2.0M; percentual += 0.5M)
+                {
+                    decimal valor = (valorFuturo - valorSaque) * percentual / 100;
+                    listaSaldoPercentuais.Add(new KeyValuePair<string, decimal>(percentual.ToString("N1").Replace(".", ","), valor));
+                }
+
+                return Json(new
+                {
+                    valorFuturo,
+                    dataAposentadoria,
+                    valorSaque,
+                    idadeDependente,
+                    fatorAtuarialPensaoMorte,
+                    fatorAtuarialSemPensaoMorte,
+                    rendaPrazoIndeterminadoPensaoMorte,
+                    rendaPrazoIndeterminadoSemPensaoMorte,
+                    listaPrazos,
+                    listaSaldoPercentuais
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
