@@ -279,7 +279,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 }
 
                 // Valor do saque
-                decimal valorSaque = dados.saque;
+                decimal valorSaque = valorFuturo / 100 * Convert.ToInt32(dados.saque);
 
                 // Dependentes
                 var idadeDependente = 0;
@@ -287,16 +287,16 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var dependenteProxy = new DependenteProxy();
 
                 // Dependente vitalício
-                var dataNascConjugue = dados.nascimentoConjugue;
-                var dataNascFilhoInvalido = dados.nascimentoFilhoInvalido;
+                DateTime? dataNascConjugue = dados.nascimentoConjugue;
+                DateTime? dataNascFilhoInvalido = dados.nascimentoFilhoInvalido;
                 DateTime? dataNascDependente;
 
-                if (dataNascConjugue != string.Empty && dataNascFilhoInvalido != string.Empty)
+                if (dataNascConjugue != null && dataNascFilhoInvalido != null)
                     dataNascDependente = dataNascConjugue > dataNascFilhoInvalido ? dataNascConjugue : dataNascFilhoInvalido;
-                else if (dataNascConjugue != string.Empty && dataNascFilhoInvalido == string.Empty)
+                else if (dataNascConjugue != null && dataNascFilhoInvalido == null)
                     dataNascDependente = dataNascConjugue;
                 else
-                    dataNascDependente = dataNascFilhoInvalido == string.Empty ? null : dataNascFilhoInvalido;
+                    dataNascDependente = dataNascFilhoInvalido == null ? null : dataNascFilhoInvalido;
 
                 /// var dependenteVitalicio = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "V", dataAposentadoria);
 
@@ -307,7 +307,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 }
 
                 // Dependente temporário
-                DateTime? dataNascDependenteTemporario = dados.nascimentoFilhoMaisNovo == string.Empty ? null : dados.nascimentoFilhoMaisNovo;
+                DateTime? dataNascDependenteTemporario = dados.nascimentoFilhoMaisNovo == null ? null : dados.nascimentoFilhoMaisNovo;
                 /// var dependenteTemporario = dependenteProxy.BuscarDependentePorContratoTrabalhoDtValidadeTipo(SqContratoTrabalho, "T", dataAposentadoria);
 
                 if (dataNascDependenteTemporario != null)
@@ -329,6 +329,8 @@ namespace Intech.Advanced.FacebApi.Controllers
                 }
 
                 var prazoDepentendeTemporario = 20 - idadeDependenteTemporario;
+                if (prazoDepentendeTemporario < 0)
+                    prazoDepentendeTemporario = 0;
                 var xn = idadeAposentadoria + prazoDepentendeTemporario;
 
                 var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", xn).VL_FATOR_B.Value;
@@ -336,7 +338,9 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdade("ax", xn).VL_FATOR_A.Value;
 
-                var fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
+                decimal fatorAn = 0;
+                if(prazoDepentendeTemporario > 0)
+                    fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
 
                 var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
 
