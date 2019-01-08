@@ -180,7 +180,9 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdade("ax", xn).VL_FATOR_A.Value;
 
-                var fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
+                decimal fatorAn = 0;
+                if (prazoDepentendeTemporario > 0)
+                    fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
 
                 var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
 
@@ -253,6 +255,9 @@ namespace Intech.Advanced.FacebApi.Controllers
                 /// var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO.Value;
 
                 var dataAposentadoria = dataNascimento.AddYears(idadeAposentadoria);
+                if (dataAposentadoria < DateTime.Now)
+                    return BadRequest("Data inválida. Insira uma data de nascimento inferior ou uma idade de aposentadoria superior.");
+
                 var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
                 var contribBruta = contribBasica * 2 + contribFacultativa;
                 var taxaMensal = BuscarTaxaMensal(taxaJuros);
@@ -264,7 +269,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 //var saldoFuturoCorrigido = saldo * x1;
                 //var mensalidadeCorrigida = contribBruta * (x1 - 1) / taxaMensal;
 
-                decimal valorFuturo = 0;
+                decimal valorFuturo = dados.aporteInicial;
 
                 while (data <= dataAposentadoria)
                 {
