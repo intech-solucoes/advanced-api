@@ -18,8 +18,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)HistManutContribuicaoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IndiceEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlanoVinculadoEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProcessoBeneficioEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SalarioContribuicaoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SaldoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UsuarioEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UsuarioGrupoEntidade.cs" />
   </ItemGroup>
 </Project>

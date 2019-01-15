@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 
@@ -33,20 +33,20 @@ namespace Intech.Advanced.Entidades
 		public int? SQ_CATEGORIA_TRABALHADOR { get; set; }
 		public int? IR_TIPO_CONTRATO { get; set; }
 		public int? IR_EXPOSICAO_AGENTE_NOCIVO { get; set; }
-		public string NO_PESSOA { get; set; }
-		public string IR_SEXO { get; set; }
-		public string DS_SEXO { get; set; }
-		public DateTime? DT_NASCIMENTO { get; set; }
-		public string NR_CPF { get; set; }
-		public string SIGLA_EMPRESA { get; set; }
-		public string NR_CEP { get; set; }
-		public string DS_ENDERECO { get; set; }
-		public string NR_ENDERECO { get; set; }
-		public string DS_COMPLEMENTO { get; set; }
-		public string NO_BAIRRO { get; set; }
-		public string NR_FONE { get; set; }
-		public string NR_CELULAR { get; set; }
-		public string NO_EMAIL { get; set; }
+		[Write(false)] public string NO_PESSOA { get; set; }
+		[Write(false)] public string IR_SEXO { get; set; }
+		[Write(false)] public string DS_SEXO { get; set; }
+		[Write(false)] public DateTime? DT_NASCIMENTO { get; set; }
+		[Write(false)] public string NR_CPF { get; set; }
+		[Write(false)] public string SIGLA_EMPRESA { get; set; }
+		[Write(false)] public string NR_CEP { get; set; }
+		[Write(false)] public string DS_ENDERECO { get; set; }
+		[Write(false)] public string NR_ENDERECO { get; set; }
+		[Write(false)] public string DS_COMPLEMENTO { get; set; }
+		[Write(false)] public string NO_BAIRRO { get; set; }
+		[Write(false)] public string NR_FONE { get; set; }
+		[Write(false)] public string NR_CELULAR { get; set; }
+		[Write(false)] public string NO_EMAIL { get; set; }
         
     }
 }

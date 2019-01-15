@@ -18,8 +18,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\HistManutContribuicaoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\IndiceProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\PlanoVinculadoProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Proxy\ProcessoBeneficioProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\SalarioContribuicaoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\SaldoProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Proxy\UsuarioGrupoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\UsuarioProxy.cs" />
   </ItemGroup>
 </Project>

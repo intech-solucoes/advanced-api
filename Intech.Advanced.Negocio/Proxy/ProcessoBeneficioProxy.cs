@@ -2,7 +2,7 @@
 
 namespace Intech.Advanced.Negocio.Proxy
 {
-    public class DadosPessoaisProxy : DadosPessoaisDAO
+    public class ProcessoBeneficioProxy : ProcessoBeneficioDAO
     {
     }
 }
