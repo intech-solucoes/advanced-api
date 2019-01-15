@@ -12,6 +12,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarDatasPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronograma.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronogramaRecebedor.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\BuscarPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\BuscarPensionistaPorCdPessoa.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\BuscarPorCdPessoa.sql" />

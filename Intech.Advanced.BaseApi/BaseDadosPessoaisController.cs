@@ -1,4 +1,5 @@
 ﻿#region Usings
+using Intech.Advanced.Entidades;
 using Intech.Advanced.Negocio.Proxy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,18 @@ namespace Intech.Advanced.BaseApi
     {
         [HttpGet]
         [Authorize("Bearer")]
-        public IActionResult GetPorCdpessoa()
+        public IActionResult Get()
         {
             try
             {
-                return Json(new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa));
+                DadosPessoaisEntidade dadosPessoais;
+
+                if (Pensionista)
+                    dadosPessoais = new DadosPessoaisProxy().BuscarPensionistaPorCdPessoa(CdPessoa);
+                else
+                    dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+
+                return Json(dadosPessoais);
             }
             catch (Exception ex)
             {

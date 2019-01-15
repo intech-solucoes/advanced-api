@@ -41,18 +41,29 @@ namespace Intech.Advanced.BaseApi
 
                 var usuario = new UsuarioProxy().BuscarPorLoginSenha(cpf, senha);
 
-                var grupo = new UsuarioGrupoProxy().BuscarPorUsuario(usuario.USR_CODIGO);
-                bool pensionista = grupo.GRP_CODIGO == 32 ? true : false;
-
                 if (usuario != null)
                 {
-                    var processo = new ProcessoBeneficioProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value);
+                    var grupo = new UsuarioGrupoProxy().BuscarPorUsuario(usuario.USR_CODIGO);
+                    bool pensionista = grupo.GRP_CODIGO == 32 ? true : false;
+
+                    string sqContratoTrabalho;
+
+                    if (pensionista)
+                    {
+                        var processo = new ProcessoBeneficioProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value);
+                        sqContratoTrabalho = processo.SQ_CONTRATO_TRABALHO.ToString();
+                    }
+                    else
+                    {
+                        var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value);
+                        sqContratoTrabalho = dadosPessoais.SQ_CONTRATO_TRABALHO.ToString();
+                    }
 
                     var claims = new List<KeyValuePair<string, string>> {
                         new KeyValuePair<string, string>("Cpf", usuario.USR_LOGIN),
                         new KeyValuePair<string, string>("CdPessoa", usuario.CD_PESSOA.ToString()),
                         new KeyValuePair<string, string>("Admin", usuario.USR_ADMINISTRADOR),
-                        new KeyValuePair<string, string>("SqContratoTrabalho", processo.SQ_CONTRATO_TRABALHO.ToString()),
+                        new KeyValuePair<string, string>("SqContratoTrabalho", sqContratoTrabalho),
                         new KeyValuePair<string, string>("Pensionista", pensionista.ToString())
                     };
 
