@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Intech.Advanced.FacebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Intech.Advanced.FacebApi.Controllers.UsuarioController.Login(Intech.Lib.Web.JWT.SigningConfigurations,Intech.Lib.Web.JWT.TokenConfigurations,System.Object)">
+            <summary>
+            Login do usuário
+            </summary>
+            <param name="signingConfigurations"></param>
+            <param name="tokenConfigurations"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intech.Lib.Util.Date.CalculoAnosMesesDiasAlgoritmo1">
+            <summary>
+            Implementação do Pattern Strategy para isolar os algoritmos de calculo de tempo.
+            Este algoritmo se baseia principalmente no calculo utilizando o número total de dias.
+            </summary>
+        </member>
+        <member name="T:Intech.Lib.Util.Date.CalculoAnosMesesDiasAlgoritmo2">
+            <summary>
+            Implementação do Pattern Strategy para isolar os algoritmos de calculo de tempo.
+            Este algoritmo se baseia principalmente no calculo utilizando dias, meses e anos.
+            </summary>
+        </member>
+        <member name="T:Intech.Lib.Util.Date.CalculoAnosMesesDiasStrategy">
+            <summary>
+            Implementação do Pattern Strategy para isolar os algoritmos de calculo de tempo.
+            Esta é a classe base que define o comportamento esperado do strategy.
+            Caso algum algoritmo não suporte uma destas operações ele deverá lançar uma exceção NotImplementedExeception
+            </summary>
+        </member>
+        <member name="T:Intech.Lib.Util.Date.IPeriodo">
+            <summary>
+            Esta interface define um contrato a ser utilizado em classes que definam
+            um período de tempo
+            </summary>
+        </member>
+        <member name="P:Intech.Lib.Util.Date.IPeriodo.DataInicio">
+            <summary>
+            Data inicial do período
+            </summary>
+        </member>
+        <member name="P:Intech.Lib.Util.Date.IPeriodo.DataTermino">
+            <summary>
+            Data de término do período
+            </summary>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_Addition(Intech.Lib.Util.Date.Intervalo,Intech.Lib.Util.Date.Intervalo)">
+            <summary>
+            Intervalo + Intervalo
+            </summary>
+            <param name="i1"></param>
+            <param name="i2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_Addition(Intech.Lib.Util.Date.Intervalo,System.Int32)">
+            <summary>
+            Intervalo + Qtd_Dias
+            </summary>
+            <param name="i1"></param>
+            <param name="dias"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_Subtraction(Intech.Lib.Util.Date.Intervalo,Intech.Lib.Util.Date.Intervalo)">
+            <summary>
+            Intervalo - Intervalo
+            </summary>
+            <param name="i1"></param>
+            <param name="i2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_Subtraction(Intech.Lib.Util.Date.Intervalo,System.Int32)">
+            <summary>
+            Intervalo - Qtd_Dias
+            </summary>
+            <param name="i1"></param>
+            <param name="dias"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_LessThan(Intech.Lib.Util.Date.Intervalo,Intech.Lib.Util.Date.Intervalo)">
+            <summary>
+            Intervalo &lt; Intervalo
+            </summary>
+            <param name="i1"></param>
+            <param name="i2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_LessThanOrEqual(Intech.Lib.Util.Date.Intervalo,Intech.Lib.Util.Date.Intervalo)">
+            <summary>
+            Intervalo &lt;= Intervalo
+            </summary>
+            <param name="i1"></param>
+            <param name="i2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_GreaterThan(Intech.Lib.Util.Date.Intervalo,Intech.Lib.Util.Date.Intervalo)">
+            <summary>
+            Intervalo &gt; Intervalo
+            </summary>
+            <param name="i1"></param>
+            <param name="i2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Util.Date.Intervalo.op_GreaterThanOrEqual(Intech.Lib.Util.Date.Intervalo,Intech.Lib.Util.Date.Intervalo)">
+            <summary>
+            Intervalo &gt;= Intervalo
+            </summary>
+            <param name="i1"></param>
+            <param name="i2"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Intech.Lib.Util.Seguranca.Criptografia.Salt">
+            <summary>
+            Salt by bruneca
+            </summary>
+        </member>
+        <member name="M:Intech.Lib.Web.JWT.AuthenticationToken.Generate(Intech.Lib.Web.JWT.SigningConfigurations,Intech.Lib.Web.JWT.TokenConfigurations,System.String)">
+            <summary>
+            Cria um token com informações básicas do usuario
+            </summary>
+            <param name="signingConfigurations"></param>
+            <param name="tokenConfigurations"></param>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Web.JWT.AuthenticationToken.Generate(Intech.Lib.Web.JWT.SigningConfigurations,Intech.Lib.Web.JWT.TokenConfigurations,System.String,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Cria um token com claims específicos
+            </summary>
+            <param name="signingConfigurations"></param>
+            <param name="tokenConfigurations"></param>
+            <param name="username"></param>
+            <param name="claims"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intech.Lib.Web.JWT.AuthenticationToken.Generate(Intech.Lib.Web.JWT.SigningConfigurations,Intech.Lib.Web.JWT.TokenConfigurations,System.Security.Claims.ClaimsIdentity)">
+            <summary>
+            Cria um token recebendo um identity já criado
+            </summary>
+            <param name="signingConfigurations"></param>
+            <param name="tokenConfigurations"></param>
+            <param name="identity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.PrimeiroDiaDoMes(System.DateTime)">
+            <summary>
+            Retorna o primeiro dia do mes da data informada
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.PrimeiroDiaDoAno(System.DateTime)">
+            <summary>
+            Retorna o primeiro dia do ano do mesmo ano da data informada
+            </summary>
+        </member>
+        <member name="M:System.DateTimeExtensoes.IdadeEm(System.DateTime,System.DateTime)">
+            <summary>
+            Calcula o período entre duas datas
+            </summary>
+            <param name="data"></param>
+            <param name="dataReferencia"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.MesPorExtenso(System.DateTime)">
+            <summary>
+            Método que retorna o mês por extenso
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.UltimoDiaDoAno(System.DateTime)">
+            <summary>
+            Retona o último dia do ano do mesmo ano da data informada
+            </summary>
+        </member>
+        <member name="M:System.DateTimeExtensoes.NumeroDecendio(System.DateTime)">
+            <summary>
+            Retorna em qual decêndio a data se encontra dentro do mês.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.NumeroQuinzena(System.DateTime)">
+            <summary>
+            Retorna em qual quinzena a data se encontra dentro do mês.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.NumeroSemana(System.DateTime)">
+            <summary>
+            Retorna em qual semana a data se encontra dentro do mês.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.DefinirDia(System.DateTime,System.Int32)">
+            <summary>
+            Substitui o dia da data
+            </summary>
+            <param name="data"></param>
+            <param name="dia"></param>
+            <returns>o mesmo mês e ano com o novo dia</returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.QuantidadeDiasMes(System.DateTime)">
+            <summary>
+            Retorna a quantidade de dias do mês
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.UltimoDiaDoMes(System.DateTime)">
+            <summary>
+            Retorna o ultimo dia do mês
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.IgualMesAno(System.DateTime,System.DateTime)">
+            <summary>
+            Verifica se é o mesmo mês e ano
+            </summary>
+            <param name="data"></param>
+            <param name="dataComparacao"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.MenorOuIgualQueMesAno(System.DateTime,System.DateTime)">
+            <summary>
+            Verifica se a data é menor que a data (Mês e Ano) informada por parâmetro
+            </summary>
+            <param name="data"></param>
+            <param name="dataComparacao"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.EhDiaUtil(System.DateTime,System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            Verifica se o dia é um dia util ou não
+            </summary>
+            <param name="data"></param>
+            <param name="feriados"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.AddDiaUtil(System.DateTime,System.Int32,System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            Adiciona uma quantidade de dias uteis na data
+            </summary>
+            <param name="data">data alvo</param>
+            <param name="qtdDias">quantidade de dias a adicionar</param>
+            <param name="feriados">lista de feriados</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.DiasEntreDatas(System.DateTime,System.DateTime)">
+            <summary>
+            Retorna o número total de dias entre duas datas
+            </summary>
+            <param name="dataInicial"></param>
+            <param name="dataFinal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.MesesEntreDatas(System.DateTime,System.DateTime)">
+            <summary>
+            Retorna o número de meses entre duas datas ignorando os dias.
+            30/08/2007 e 01/10/2007 = 2 meses
+            </summary>
+            <param name="dataInicial">Data inicial</param>
+            <param name="dataFinal">Data final</param>
+            <returns>Número de meses entre duas datas</returns>
+        </member>
+        <member name="M:System.DateTimeExtensoes.MesesEntreDatas(System.DateTime,System.DateTime,System.Boolean)">
+            <summary>
+            Retorna o números de meses entre duas datas ignorando os dias.
+            30/08/2007 e 01/10/2007 = 3 meses => mês 8, 9 e 10.
+            </summary>
+            <param name="dataInicial"></param>
+            <param name="dataFinal"></param>
+            <param name="contagemComercial"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringExtensoes.LimparMascara(System.String)">
+            <summary>
+            Retorna valor sem máscara. Se o parâmetro possuir apenas os caracteres especiais de máscara,
+            o método retorna uma string vazia.
+            </summary>
+            <param name="valor">Valor mascarado.</param>
+            <returns>Valor sem máscara.</returns>
+        </member>
+        <member name="F:System.Mascaras.CPF">
+            <summary>
+            Mascara do CPF
+            </summary>
+        </member>
+        <member name="F:System.Mascaras.CNPJ">
+            <summary>
+            Mascara do CNPJ
+            </summary>
+        </member>
+        <member name="F:System.Mascaras.CEP">
+            <summary>
+            Mascara do CEP
+            </summary>
+        </member>
+        <member name="F:System.Mascaras.TELEFONE">
+            <summary>
+            Mascara do Telefone
+            </summary>
+        </member>
+        <member name="F:System.Mascaras.DDD_TELEFONE">
+            <summary>
+            Mascara do Telefone
+            </summary>
+        </member>
+    </members>
+</doc>
