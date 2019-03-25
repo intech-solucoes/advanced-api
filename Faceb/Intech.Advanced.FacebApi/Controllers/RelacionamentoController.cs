@@ -1,5 +1,6 @@
 ﻿#region Usings
 using Intech.Advanced.BaseApi;
+using Intech.Advanced.Entidades;
 using Intech.Advanced.Negocio.Proxy;
 using Intech.Lib.Util.Email;
 using Intech.Lib.Web;
@@ -21,10 +22,16 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
-                var usuario = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+                DadosPessoaisEntidade dadosPessoais;
+
+                if (Pensionista)
+                    dadosPessoais = new DadosPessoaisProxy().BuscarPensionistaPorCdPessoa(CdPessoa);
+                else
+                    dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+
                 var emailConfig = AppSettings.Get().Email;
                 var corpoEmail = 
-                    $"Nome: {usuario.NO_PESSOA}<br/>" +
+                    $"Nome: {dadosPessoais.NO_PESSOA}<br/>" +
                     $"E-mail: {relacionamentoEntidade.Email}<br/>" +
                     $"Mensagem: {relacionamentoEntidade.Mensagem}";
                 EnvioEmail.Enviar(emailConfig, emailConfig.EmailRelacionamento, $"Faceb - {relacionamentoEntidade.Assunto}", corpoEmail);
