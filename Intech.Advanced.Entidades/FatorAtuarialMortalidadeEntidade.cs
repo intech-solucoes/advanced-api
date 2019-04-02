@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 
@@ -15,6 +15,7 @@ namespace Intech.Advanced.Entidades
 		public int? NR_IDADE_DEP { get; set; }
 		public decimal? VL_FATOR_A { get; set; }
 		public decimal? VL_FATOR_B { get; set; }
+		public string IR_SEXO { get; set; }
         
     }
 }

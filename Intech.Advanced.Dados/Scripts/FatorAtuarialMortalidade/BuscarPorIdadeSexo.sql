@@ -1,0 +1,13 @@
+﻿/*Config
+    Retorno
+        -FatorAtuarialMortalidadeEntidade
+    Parametros
+        -IDADE:int
+        -SEXO:string
+*/
+
+SELECT  *
+FROM  FI_FATOR_ATUARIAL_MORTALIDADE
+WHERE (FI_FATOR_ATUARIAL_MORTALIDADE.IC_TABELA = 'AX') 
+  AND (FI_FATOR_ATUARIAL_MORTALIDADE.NR_IDADE_TIT = @IDADE)
+  AND (FI_FATOR_ATUARIAL_MORTALIDADE.IR_SEXO = @SEXO)

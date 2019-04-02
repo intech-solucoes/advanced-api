@@ -97,6 +97,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var sqPlano = 3;
 
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
                 int idadeAposentadoria = Convert.ToInt32(dados.idadeAposentadoria);
                 decimal contribBasica = Convert.ToDecimal(dados.contribBasica, new CultureInfo("pt-BR"));
                 decimal contribFacultativa = Convert.ToDecimal(dados.contribFacultativa, new CultureInfo("pt-BR"));
@@ -138,6 +139,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 // Dependentes
                 var idadeDependente = 0;
+                var sexoDependente = "";
                 var idadeDependenteTemporario = 0;
                 var dependenteProxy = new DependenteProxy();
 
@@ -146,6 +148,9 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 if (dependenteVitalicio != null)
                 {
+                    var dadosDependente = new DadosPessoaisProxy().BuscarPorCdPessoa(dependenteVitalicio.CD_PESSOA_DEP);
+                    sexoDependente = dadosDependente.IR_SEXO;
+
                     var dataNascDependente = dependenteVitalicio.DT_NASCIMENTO;
                     idadeDependente = new Intervalo(dataAposentadoria, dataNascDependente).Anos;
                 }
@@ -155,34 +160,37 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 if (dependenteTemporario != null)
                 {
+                    var dadosDependente = new DadosPessoaisProxy().BuscarDependentePorCdPessoa(dependenteTemporario.CD_PESSOA_DEP);
+                    sexoDependente = dadosDependente.IR_SEXO;
+
                     var dataNascDependenteTemporario = dependenteTemporario.DT_NASCIMENTO;
                     idadeDependenteTemporario = new Intervalo(dataAposentadoria, dataNascDependenteTemporario).Anos;
                 }
                 
                 // Fator atuarial
                 var fatorAtuarialProxy = new FatorAtuarialMortalidadeProxy();
-                var axiPar = fatorAtuarialProxy.BuscarPorIdade(idadeAposentadoria).VL_FATOR_A.Value;
+                var axiPar = fatorAtuarialProxy.BuscarPorIdadeSexo(idadeAposentadoria, dadosPessoais.IR_SEXO).VL_FATOR_A.Value;
 
                 var axiDep = 0M;
                 var axyi = 0M;
                 if (idadeDependente > 0)
                 {
-                    axiDep = fatorAtuarialProxy.BuscarPorIdade(idadeDependente).VL_FATOR_A.Value;
-                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDep(idadeAposentadoria, idadeDependente);
+                    axiDep = fatorAtuarialProxy.BuscarPorIdadeSexo(idadeDependente, sexoDependente).VL_FATOR_A.Value;
+                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDepSexo(idadeAposentadoria, idadeDependente, sexoDependente);
                     axyi = fator.VL_FATOR_A.Value;
                 }
 
                 var prazoDepentendeTemporario = 20 - idadeDependenteTemporario;
                 var xn = idadeAposentadoria + prazoDepentendeTemporario;
 
-                var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", xn).VL_FATOR_B.Value;
-                var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", idadeAposentadoria).VL_FATOR_B.Value;
+                var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("lxdx", xn, dadosPessoais.IR_SEXO).VL_FATOR_B.Value;
+                var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("lxdx", idadeAposentadoria, dadosPessoais.IR_SEXO).VL_FATOR_B.Value;
 
-                var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdade("ax", xn).VL_FATOR_A.Value;
+                var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("ax", xn, dadosPessoais.IR_SEXO).VL_FATOR_A.Value;
 
                 decimal fatorAn = 0;
                 if (prazoDepentendeTemporario > 0)
-                    fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
+                    fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("an", prazoDepentendeTemporario, sexoDependente).VL_FATOR_A.Value;
 
                 var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
 
@@ -322,14 +330,14 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 // Fator atuarial
                 var fatorAtuarialProxy = new FatorAtuarialMortalidadeProxy();
-                var axiPar = fatorAtuarialProxy.BuscarPorIdade(idadeAposentadoria).VL_FATOR_A.Value;
+                var axiPar = fatorAtuarialProxy.BuscarPorIdadeSexo(idadeAposentadoria, (string)dados.sexo).VL_FATOR_A.Value;
 
                 var axiDep = 0M;
                 var axyi = 0M;
                 if (idadeDependente > 0)
                 {
-                    axiDep = fatorAtuarialProxy.BuscarPorIdade(idadeDependente).VL_FATOR_A.Value;
-                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDep(idadeAposentadoria, idadeDependente);
+                    axiDep = fatorAtuarialProxy.BuscarPorIdadeSexo(idadeDependente, (string)dados.sexoFilhoMaisNovo).VL_FATOR_A.Value;
+                    var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDepSexo(idadeAposentadoria, idadeDependente, (string)dados.sexoFilhoMaisNovo);
                     axyi = fator.VL_FATOR_A.Value;
                 }
 
@@ -338,14 +346,14 @@ namespace Intech.Advanced.FacebApi.Controllers
                     prazoDepentendeTemporario = 0;
                 var xn = idadeAposentadoria + prazoDepentendeTemporario;
 
-                var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", xn).VL_FATOR_B.Value;
-                var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdade("lxdx", idadeAposentadoria).VL_FATOR_B.Value;
+                var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("lxdx", xn, (string)dados.sexo).VL_FATOR_B.Value;
+                var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("lxdx", idadeAposentadoria, (string)dados.sexo).VL_FATOR_B.Value;
 
-                var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdade("ax", xn).VL_FATOR_A.Value;
+                var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("ax", xn, (string)dados.sexo).VL_FATOR_A.Value;
 
                 decimal fatorAn = 0;
                 if(prazoDepentendeTemporario > 0)
-                    fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdade("an", prazoDepentendeTemporario).VL_FATOR_A.Value;
+                    fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("an", prazoDepentendeTemporario, (string)dados.sexoFilhoInvalido).VL_FATOR_A.Value;
 
                 var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
 

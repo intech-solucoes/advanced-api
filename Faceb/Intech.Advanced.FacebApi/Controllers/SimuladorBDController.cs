@@ -139,7 +139,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                     throw new Exception("");
 
                 var valor = Math.Min(salario.VL_BASE_PREVIDENCIA.Value, teto.VL_INDICE.Value);
-                var fator = fatores.Single(x => x.Key == dtReferencia);
+                var fator = fatores.First(x => x.Key <= dtReferencia);
 
                 valor = valor * fator.Value;
 

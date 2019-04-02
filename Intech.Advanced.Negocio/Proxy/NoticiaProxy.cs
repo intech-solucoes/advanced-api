@@ -2,7 +2,7 @@
 
 namespace Intech.Advanced.Negocio.Proxy
 {
-    public class FatorAtuarialMortalidadeProxy : FatorAtuarialMortalidadeDAO
+    public class NoticiaProxy : NoticiaDAO
     {
     }
 }
