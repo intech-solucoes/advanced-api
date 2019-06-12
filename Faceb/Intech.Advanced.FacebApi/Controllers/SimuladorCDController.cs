@@ -111,6 +111,13 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO.Value;
 
                 var dataAposentadoria = dataNascimento.AddYears(idadeAposentadoria);
+
+                var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
+                var dataInscricao = plano.DT_INSC_PLANO;
+                var dataAposentadoria2 = dataInscricao.AddYears(10);
+
+                dataAposentadoria = DateTime.Compare(dataAposentadoria, dataAposentadoria2) > 0 ? dataAposentadoria : dataAposentadoria2;
+
                 var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
                 var contribBruta = contribBasica * 2 + contribFacultativa;
                 var taxaMensal = BuscarTaxaMensal(taxaJuros);
@@ -261,13 +268,12 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
-                var dataAtual = DateTime.Now.PrimeiroDiaDoMes();
+                var data = DateTime.Now.PrimeiroDiaDoMes();
 
-                var dataAposentadoria = dados.DataNascimento.AddYears(dados.IdadeAposentadoria);
-                if (dataAposentadoria < DateTime.Now)
-                    return BadRequest("Data inválida. Insira uma data de nascimento inferior ou uma idade de aposentadoria superior.");
+                var dataAposentadoriaPorIdade = dados.DataNascimento.AddYears(dados.IdadeAposentadoria);
+                var dataAposentaadoriaPorPlano = DateTime.Now.AddYears(10);
 
-                var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
+                var dataAposentadoria = DateTime.Compare(dataAposentadoriaPorIdade, dataAposentaadoriaPorPlano) > 0 ? dataAposentadoriaPorIdade : dataAposentaadoriaPorPlano;
 
                 var contribFacultativa = dados.ContribFacultativa.HasValue ? dados.ContribFacultativa.Value : 0;
 

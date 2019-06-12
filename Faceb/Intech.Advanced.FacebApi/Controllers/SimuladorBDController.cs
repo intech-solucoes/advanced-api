@@ -64,7 +64,46 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var valorSuplementacao = Math.Max(valor1, valor2);
                 var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO;
-                var dataAposentadoria = dataNascimento.Value.AddYears(idadeMinima);
+                var dataAposentadoriaPorIdade = dataNascimento.Value.AddYears(idadeMinima);
+
+                var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
+                var dataAposentadoriaPorPlano = plano.DT_INSC_PLANO.AddYears(15);
+
+                var tempoServico = new TempoServicoProxy().BuscarPorCdPessoa(CdPessoa);
+
+                var tempoTotal = new Intervalo(new CalculoAnosMesesDiasAlgoritmo2());
+
+                foreach(var tempo in tempoServico)
+                {
+                    DateTime fim;
+
+                    if (tempo.DT_TERM_ATIVIDADE.HasValue)
+                        fim = tempo.DT_TERM_ATIVIDADE.Value;
+                    else
+                        fim = DateTime.Today;
+
+                    var intervaloTrabalho = new Intervalo(fim, tempo.DT_INIC_ATIVIDADE.Value, new CalculoAnosMesesDiasAlgoritmo2());
+
+                    tempoTotal.Adiciona(intervaloTrabalho);
+                }
+
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+                var fatorSexo = dadosPessoais.IR_SEXO == null || dadosPessoais.IR_SEXO == "M" ? 35 : 30;
+
+                var dataAposentadoriaPorTempoTrabalho
+                    = tempoTotal.Anos < fatorSexo
+                    ? tempoServico.First().DT_INIC_ATIVIDADE.Value.AddYears(fatorSexo)
+                    : tempoServico.First().DT_INIC_ATIVIDADE.Value.AddDays(tempoTotal.Dias);
+
+                var listaDatas = new List<DateTime>
+                {
+                    dataAposentadoriaPorIdade,
+                    dataAposentadoriaPorPlano,
+                    dataAposentadoriaPorTempoTrabalho
+                };
+
+                var dataAposentadoria = listaDatas.Max(x => x);
+
                 var dataReferencia = DateTime.Now;
 
                 return Json(new

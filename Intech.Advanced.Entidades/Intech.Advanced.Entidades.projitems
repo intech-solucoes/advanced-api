@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ContribuicaoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DadosPessoaisEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependenteEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensoes\PlanoVinculadoExtensao.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FatorAtuarialMortalidadeEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FatorValidadeEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HistManutContribuicaoEntidade.cs" />
@@ -22,7 +23,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ProcessoBeneficioEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SalarioContribuicaoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SaldoEntidade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TempoServicoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UsuarioEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UsuarioGrupoEntidade.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Dominios\" />
   </ItemGroup>
 </Project>

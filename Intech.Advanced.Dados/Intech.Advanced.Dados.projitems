@@ -39,6 +39,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarBrutoPorPlanoReferenciaPessoa.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarIndividualPorPlanoDataReferenciaPessoa.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Saldo\BuscarTaxaAdm.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\TempoServico\BuscarPorCdPessoa.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\UsuarioGrupo\BuscarPorUsuario.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Usuario\BuscarPorCPF.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Usuario\BuscarPorLoginSenha.sql" />
@@ -57,6 +58,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Scripts\ProcessoBeneficio\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\SalarioContribuicao\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Saldo\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\TempoServico\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\UsuarioGrupo\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Usuario\entidade.json" />
   </ItemGroup>
@@ -74,6 +76,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ProcessoBeneficioDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\SalarioContribuicaoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\SaldoDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\TempoServicoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\UsuarioDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\UsuarioGrupoDAO.cs" />
   </ItemGroup>

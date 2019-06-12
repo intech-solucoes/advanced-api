@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\ProcessoBeneficioProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\SalarioContribuicaoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\SaldoProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Proxy\TempoServicoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\UsuarioGrupoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\UsuarioProxy.cs" />
   </ItemGroup>
