@@ -175,7 +175,10 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var teto = indiceTETOPREV.FirstOrDefault(x => x.DT_INIC_VALIDADE <= dtReferencia);
 
                 if (teto == null)
-                    throw new Exception("");
+                    throw new Exception($"Índice TETOPREV não encontrado para a referência {dtReferencia.ToString("dd/MM/yyyy")}");
+
+                if (!salario.VL_BASE_PREVIDENCIA.HasValue)
+                    throw new Exception($"Salário de contribuição não encontrado na data de {salario.DT_REFERENCIA}");
 
                 var valor = Math.Min(salario.VL_BASE_PREVIDENCIA.Value, teto.VL_INDICE.Value);
                 var fator = fatores.First(x => x.Key <= dtReferencia);

@@ -69,7 +69,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 if (usuario != null)
                 {
                     var grupo = new UsuarioGrupoProxy().BuscarPorUsuario(usuario.USR_CODIGO);
-                    bool pensionista = grupo.GRP_CODIGO == 32 ? true : false;
+                    bool pensionista = grupo != null && grupo.GRP_CODIGO == 32 ? true : false;
 
                     string sqContratoTrabalho;
 

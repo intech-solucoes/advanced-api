@@ -6,7 +6,7 @@ using System.Linq;
 using Intech.Advanced.BaseApi;
 using Intech.Advanced.Negocio.Proxy;
 using Intech.Lib.Util.Date;
-using Intech.Lib.Util.Email;
+using Intech.Lib.Email;
 using Intech.Lib.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

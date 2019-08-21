@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intech.Advanced.FacebApi", "Faceb\Intech.Advanced.FacebApi\Intech.Advanced.FacebApi.csproj", "{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Advanced.FacebApi", "Faceb\Intech.Advanced.FacebApi\Intech.Advanced.FacebApi.csproj", "{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Intech.Advanced.BaseApi", "Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.shproj", "{A28402BE-2D64-43BF-88E1-4DD91719BD56}"
 EndProject
@@ -17,17 +17,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plataforma", "Plataforma", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Intech.Lib.Dapper", "..\lib\dotnet-lib\Intech.Lib.Dapper\Intech.Lib.Dapper.shproj", "{21944D5C-2AF2-467A-B973-172529BF229D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Lib.Util", "..\Intech.Lib\Intech.Lib.Util\Intech.Lib.Util.csproj", "{F850B477-9858-4BCA-ADE0-209F7C081BC4}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Intech.Lib.Util", "..\lib\dotnet-lib\Intech.Lib.Util\Intech.Lib.Util.shproj", "{73968E62-3181-49AC-8C2D-81331534BC6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Lib.Web", "..\Intech.Lib\Intech.Lib.Web\Intech.Lib.Web.csproj", "{C962FA00-CCC0-4E61-86C5-8DD7A57EEA02}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Intech.Lib.Web", "..\lib\dotnet-lib\Intech.Lib.Web\Intech.Lib.Web.shproj", "{17FB1551-D800-46E6-8B2F-3A19BBB43EBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Lib.Dapper", "..\Intech.Lib\Intech.Lib.Dapper\Intech.Lib.Dapper.csproj", "{FDB21403-8310-41CC-936C-414F142B7316}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Lib.Email", "..\Intech.Lib\Intech.Lib.Email\Intech.Lib.Email.csproj", "{C527388A-C378-4E49-9C57-0A6DA21100A6}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\lib\dotnet-lib\Intech.Lib.Web\Intech.Lib.Web.projitems*{17fb1551-d800-46e6-8b2f-3a19bbb43eba}*SharedItemsImports = 13
-		..\lib\dotnet-lib\Intech.Lib.Dapper\Intech.Lib.Dapper.projitems*{21944d5c-2af2-467a-b973-172529bf229d}*SharedItemsImports = 13
-		..\lib\dotnet-lib\Intech.Lib.Util\Intech.Lib.Util.projitems*{73968e62-3181-49ac-8c2d-81331534bc6e}*SharedItemsImports = 13
 		Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.projitems*{a28402be-2d64-43bf-88e1-4dd91719bd56}*SharedItemsImports = 13
 		Intech.Advanced.Dados\Intech.Advanced.Dados.projitems*{a963501f-4def-44bb-a578-ee1d002c986e}*SharedItemsImports = 13
 		Intech.Advanced.Entidades\Intech.Advanced.Entidades.projitems*{c64a8383-f3c7-477f-81f3-f7d8dcdf1397}*SharedItemsImports = 13
@@ -42,6 +41,22 @@ Global
 		{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F850B477-9858-4BCA-ADE0-209F7C081BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F850B477-9858-4BCA-ADE0-209F7C081BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F850B477-9858-4BCA-ADE0-209F7C081BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F850B477-9858-4BCA-ADE0-209F7C081BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C962FA00-CCC0-4E61-86C5-8DD7A57EEA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C962FA00-CCC0-4E61-86C5-8DD7A57EEA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C962FA00-CCC0-4E61-86C5-8DD7A57EEA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C962FA00-CCC0-4E61-86C5-8DD7A57EEA02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDB21403-8310-41CC-936C-414F142B7316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDB21403-8310-41CC-936C-414F142B7316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDB21403-8310-41CC-936C-414F142B7316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDB21403-8310-41CC-936C-414F142B7316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C527388A-C378-4E49-9C57-0A6DA21100A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C527388A-C378-4E49-9C57-0A6DA21100A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C527388A-C378-4E49-9C57-0A6DA21100A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C527388A-C378-4E49-9C57-0A6DA21100A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,9 +66,10 @@ Global
 		{A963501F-4DEF-44BB-A578-EE1D002C986E} = {A500DA70-FC32-4D0D-A4BF-CA71625DFC06}
 		{C64A8383-F3C7-477F-81F3-F7D8DCDF1397} = {A500DA70-FC32-4D0D-A4BF-CA71625DFC06}
 		{FF05A498-1C45-4D0A-B66F-C8419C3F9CF4} = {A500DA70-FC32-4D0D-A4BF-CA71625DFC06}
-		{21944D5C-2AF2-467A-B973-172529BF229D} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
-		{73968E62-3181-49AC-8C2D-81331534BC6E} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
-		{17FB1551-D800-46E6-8B2F-3A19BBB43EBA} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
+		{F850B477-9858-4BCA-ADE0-209F7C081BC4} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
+		{C962FA00-CCC0-4E61-86C5-8DD7A57EEA02} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
+		{FDB21403-8310-41CC-936C-414F142B7316} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
+		{C527388A-C378-4E49-9C57-0A6DA21100A6} = {AF73B7CB-C6B8-41C1-A5D0-43648F573FD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B260E05-9F57-439D-8D84-27B211647064}

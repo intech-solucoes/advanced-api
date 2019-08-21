@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -14,11 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper.Contrib" Version="1.50.5" />
-    <PackageReference Include="MailKit" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.12.0-beta2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Intech.Lib\Intech.Lib.Dapper\Intech.Lib.Dapper.csproj" />
+    <ProjectReference Include="..\..\..\Intech.Lib\Intech.Lib.Email\Intech.Lib.Email.csproj" />
+    <ProjectReference Include="..\..\..\Intech.Lib\Intech.Lib.Util\Intech.Lib.Util.csproj" />
+    <ProjectReference Include="..\..\..\Intech.Lib\Intech.Lib.Web\Intech.Lib.Web.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.projitems" Label="Shared" />
@@ -28,11 +32,5 @@
   <Import Project="..\..\Intech.Advanced.Entidades\Intech.Advanced.Entidades.projitems" Label="Shared" />
 
   <Import Project="..\..\Intech.Advanced.Negocio\Intech.Advanced.Negocio.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\lib\dotnet-lib\Intech.Lib.Util\Intech.Lib.Util.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\lib\dotnet-lib\Intech.Lib.Web\Intech.Lib.Web.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\lib\dotnet-lib\Intech.Lib.Dapper\Intech.Lib.Dapper.projitems" Label="Shared" />
 
 </Project>

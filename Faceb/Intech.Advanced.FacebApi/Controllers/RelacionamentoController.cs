@@ -2,7 +2,7 @@
 using Intech.Advanced.BaseApi;
 using Intech.Advanced.Entidades;
 using Intech.Advanced.Negocio.Proxy;
-using Intech.Lib.Util.Email;
+using Intech.Lib.Email;
 using Intech.Lib.Web;
 using Intech.Lib.Web.Entidades;
 using Microsoft.AspNetCore.Authorization;
