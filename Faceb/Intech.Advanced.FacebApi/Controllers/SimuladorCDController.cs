@@ -415,7 +415,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                     $"Uma Simulação de Benefício no mobile foi realizada pelo usuário:<br/>" +
                     $"Nome: {dados.nome}<br/>" +
                     $"E-mail: {dados.email}<br/>";
-                EnvioEmail.EnviarMailKit(emailConfig, emailConfig.EmailRelacionamento, $"Faceb - Simulação de Não Participante", corpoEmail);
+                EnvioEmail.Enviar(emailConfig, emailConfig.EmailRelacionamento, $"Faceb - Simulação de Não Participante", corpoEmail);
 
                 return Json("Um e-mail com os dados da sua simulação foi enviado para a Faceb! ");
             }
@@ -424,7 +424,6 @@ namespace Intech.Advanced.FacebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 
     public class DadosSimulacaoNaoParticipante

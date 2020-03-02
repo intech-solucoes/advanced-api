@@ -9,6 +9,7 @@
     <Import_RootNamespace>Intech.Advanced.Dados</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\CalendarioPgt\BuscarPorPlano.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarDatasPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronograma.sql" />
@@ -45,6 +46,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Usuario\BuscarPorLoginSenha.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\CalendarioPgt\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\entidade.json" />
@@ -63,6 +65,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Usuario\entidade.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\CalendarioPgtDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ContrachequeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ContribuicaoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\DadosPessoaisDAO.cs" />

@@ -1,7 +1,7 @@
 ﻿#region Usings
 using Intech.Advanced.BaseApi;
 using Intech.Advanced.Negocio.Proxy;
-using Intech.Lib.Web.JWT;
+using Intech.Lib.JWT;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -9,6 +9,7 @@
     <Import_RootNamespace>Intech.Advanced.Entidades</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CalendarioPgtEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ContrachequeEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ContribuicaoEntidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DadosPessoaisEntidade.cs" />

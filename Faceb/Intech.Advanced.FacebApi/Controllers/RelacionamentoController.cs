@@ -34,7 +34,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                     $"Nome: {dadosPessoais.NO_PESSOA}<br/>" +
                     $"E-mail: {relacionamentoEntidade.Email}<br/>" +
                     $"Mensagem: {relacionamentoEntidade.Mensagem}";
-                EnvioEmail.EnviarMailKit(emailConfig, emailConfig.EmailRelacionamento, $"Faceb - {relacionamentoEntidade.Assunto}", corpoEmail);
+                EnvioEmail.Enviar(emailConfig, emailConfig.EmailRelacionamento, $"Faceb - {relacionamentoEntidade.Assunto}", corpoEmail);
                 return Ok();
             }
             catch (Exception ex)

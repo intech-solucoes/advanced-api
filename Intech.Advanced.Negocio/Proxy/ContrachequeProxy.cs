@@ -1,8 +1,10 @@
+#region Usings
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Intech.Advanced.Dados.DAO;
-using Intech.Advanced.Entidades;
+using Intech.Advanced.Entidades; 
+#endregion
 
 namespace Intech.Advanced.Negocio.Proxy
 {

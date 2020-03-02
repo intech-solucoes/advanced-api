@@ -9,6 +9,7 @@
     <Import_RootNamespace>Intech.Advanced.Negocio</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Proxy\CalendarioPgtProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\ContrachequeProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\ContribuicaoProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Proxy\DadosPessoaisProxy.cs" />
