@@ -1,0 +1,1 @@
+﻿export { DadosPessoaisEntidade } from "./DadosPessoaisEntidade";

@@ -7,7 +7,8 @@ using Intech.Lib.Web;
 using Intech.Lib.Web.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System; 
+using System;
+using System.Linq;
 #endregion
 
 namespace Intech.Advanced.FacebApi.Controllers
@@ -27,7 +28,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 if (Pensionista)
                     dadosPessoais = new DadosPessoaisProxy().BuscarPensionistaPorCdPessoa(CdPessoa);
                 else
-                    dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+                    dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First();
 
                 var emailConfig = AppSettings.Get().Email;
                 var corpoEmail = 

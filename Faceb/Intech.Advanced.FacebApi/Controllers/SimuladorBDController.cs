@@ -63,7 +63,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var valor2 = (SRC * 0.25M) * carencia / 15;
 
                 var valorSuplementacao = Math.Max(valor1, valor2);
-                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO;
+                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First().DT_NASCIMENTO;
                 var dataAposentadoriaPorIdade = dataNascimento.Value.AddYears(idadeMinima);
 
                 var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
@@ -87,7 +87,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                     tempoTotal.Adiciona(intervaloTrabalho);
                 }
 
-                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First();
                 var fatorSexo = dadosPessoais.IR_SEXO == null || dadosPessoais.IR_SEXO == "M" ? 35 : 30;
 
                 var dataAposentadoriaPorTempoTrabalho
@@ -123,7 +123,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 
         int CalcularIdadeParticipante()
         {
-            var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+            var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First();
             var idadeParticipante = new Intervalo(DateTime.Now, dadosPessoais.DT_NASCIMENTO.Value, new CalculoAnosMesesDiasAlgoritmo2()).Anos;
             return idadeParticipante;
         }

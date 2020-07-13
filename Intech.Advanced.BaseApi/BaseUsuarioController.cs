@@ -7,7 +7,7 @@ using System;
 
 namespace Intech.Advanced.BaseApi
 {
-    public class BaseUsuarioController : Controller
+    public class BaseUsuarioController : BaseController
     {
         [HttpGet]
         [Authorize("Bearer")]

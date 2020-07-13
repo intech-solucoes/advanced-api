@@ -69,7 +69,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
 
-                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO.Value;
+                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First().DT_NASCIMENTO.Value;
                 var idadeParticipante = new Intervalo(DateTime.Now, dataNascimento).Anos;
 
                 if (idadeParticipante > 48)
@@ -99,7 +99,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var sqPlano = 3;
 
-                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First();
                 int idadeAposentadoria = Convert.ToInt32(dados.idadeAposentadoria);
                 decimal contribBasica = Convert.ToDecimal(dados.contribBasica, new CultureInfo("pt-BR"));
                 decimal contribFacultativa = Convert.ToDecimal(dados.contribFacultativa, new CultureInfo("pt-BR"));
@@ -108,7 +108,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
 
                 var dataAtual = DateTime.Now.PrimeiroDiaDoMes();
-                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).DT_NASCIMENTO.Value;
+                var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First().DT_NASCIMENTO.Value;
 
                 var dataAposentadoria = dataNascimento.AddYears(idadeAposentadoria);
 

@@ -5,7 +5,8 @@ using Intech.Lib.JWT;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Linq;
 #endregion
 
 namespace Intech.Advanced.FacebApi.Controllers
@@ -30,7 +31,7 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 if (usuario != null)
                 {
-                    var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value);
+                    var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value).First();
 
                     var claims = new List<KeyValuePair<string, string>> {
                         new KeyValuePair<string, string>("Cpf", usuario.USR_LOGIN),
@@ -80,7 +81,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                     }
                     else
                     {
-                        var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value);
+                        var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(usuario.CD_PESSOA.Value).First();
                         sqContratoTrabalho = dadosPessoais.SQ_CONTRATO_TRABALHO.ToString();
                     }
 
@@ -108,6 +109,67 @@ namespace Intech.Advanced.FacebApi.Controllers
                 {
                     throw new Exception("Matrícula ou senha incorretos!");
                 }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("[action]")]
+        [Authorize("Bearer")]
+        public IActionResult BuscarMatriculas()
+        {
+            try
+            {
+                var matriculas = new List<string>();
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
+
+                dadosPessoais
+                    .ForEach(matricula =>
+                    {
+                        matriculas.Add(matricula.NR_REGISTRO);
+                    });
+
+                return Ok(matriculas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("[action]/{matricula}")]
+        [Authorize("Bearer")]
+        public IActionResult SelecionarMatricula(
+            [FromServices] SigningConfigurations signingConfigurations,
+            [FromServices] TokenConfigurations tokenConfigurations,
+            string matricula)
+        {
+            try
+            {
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).Single(x => x.NR_REGISTRO == matricula);
+
+                var sqContratoTrabalho = dadosPessoais.SQ_CONTRATO_TRABALHO.ToString();
+
+                var claims = new List<KeyValuePair<string, string>> {
+                    new KeyValuePair<string, string>("Cpf", Cpf),
+                    new KeyValuePair<string, string>("CdPessoa", CdPessoa.ToString()),
+                    new KeyValuePair<string, string>("Admin", Admin.ToString()),
+                    new KeyValuePair<string, string>("SqContratoTrabalho", sqContratoTrabalho),
+                    new KeyValuePair<string, string>("Pensionista", Pensionista.ToString())
+                };
+
+                var token = AuthenticationToken.Generate(signingConfigurations, tokenConfigurations, Cpf, claims);
+                return Json(new
+                {
+                    token.AccessToken,
+                    token.Authenticated,
+                    token.Created,
+                    token.Expiration,
+                    token.Message,
+                    Pensionista
+                });
             }
             catch (Exception ex)
             {

@@ -4,9 +4,9 @@ using Dapper.Contrib.Extensions;
 
 namespace Intech.Advanced.Entidades
 {
-    [Table("FI_CONTRATO_TRABALHO")]
-    public class DadosPessoaisEntidade
-    {
+	[Table("FI_CONTRATO_TRABALHO")]
+	public class DadosPessoaisEntidade
+	{
 		[Key]
 		public int SQ_CONTRATO_TRABALHO { get; set; }
 		public int CD_PESSOA { get; set; }
@@ -33,6 +33,7 @@ namespace Intech.Advanced.Entidades
 		public int? SQ_CATEGORIA_TRABALHADOR { get; set; }
 		public int? IR_TIPO_CONTRATO { get; set; }
 		public int? IR_EXPOSICAO_AGENTE_NOCIVO { get; set; }
+		public string TXT_OBSERVACAO { get; set; }
 		[Write(false)] public string NO_PESSOA { get; set; }
 		[Write(false)] public string IR_SEXO { get; set; }
 		[Write(false)] public string DS_SEXO { get; set; }
@@ -47,6 +48,5 @@ namespace Intech.Advanced.Entidades
 		[Write(false)] public string NR_FONE { get; set; }
 		[Write(false)] public string NR_CELULAR { get; set; }
 		[Write(false)] public string NO_EMAIL { get; set; }
-        
-    }
+	}
 }

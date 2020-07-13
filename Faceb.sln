@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intech.Advanced.FacebApi", "Faceb\Intech.Advanced.FacebApi\Intech.Advanced.FacebApi.csproj", "{A2C3E4D5-02C7-42BA-83D6-560F39E65A82}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.projitems*{a28402be-2d64-43bf-88e1-4dd91719bd56}*SharedItemsImports = 13
+		Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.projitems*{a2c3e4d5-02c7-42ba-83d6-560f39e65a82}*SharedItemsImports = 5
+		Intech.Advanced.Dados\Intech.Advanced.Dados.projitems*{a2c3e4d5-02c7-42ba-83d6-560f39e65a82}*SharedItemsImports = 5
+		Intech.Advanced.Entidades\Intech.Advanced.Entidades.projitems*{a2c3e4d5-02c7-42ba-83d6-560f39e65a82}*SharedItemsImports = 5
+		Intech.Advanced.Negocio\Intech.Advanced.Negocio.projitems*{a2c3e4d5-02c7-42ba-83d6-560f39e65a82}*SharedItemsImports = 5
 		Intech.Advanced.Dados\Intech.Advanced.Dados.projitems*{a963501f-4def-44bb-a578-ee1d002c986e}*SharedItemsImports = 13
 		Intech.Advanced.Entidades\Intech.Advanced.Entidades.projitems*{c64a8383-f3c7-477f-81f3-f7d8dcdf1397}*SharedItemsImports = 13
 		Intech.Advanced.Negocio\Intech.Advanced.Negocio.projitems*{ff05a498-1c45-4d0a-b66f-c8419c3f9cf4}*SharedItemsImports = 13
