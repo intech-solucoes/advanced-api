@@ -107,18 +107,18 @@ namespace Intech.Advanced.FacebApi.Controllers
                 decimal saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
 
-                var dataAtual = DateTime.Now.PrimeiroDiaDoMes();
+                var dataAtual = DateTime.Now;//.PrimeiroDiaDoMes();
                 var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First().DT_NASCIMENTO.Value;
 
                 var dataAposentadoria = dataNascimento.AddYears(idadeAposentadoria);
 
                 var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
-                var dataInscricao = plano.DT_INSC_PLANO;
+                var dataInscricao = plano.DT_INSC_ANTERIOR ?? plano.DT_INSC_PLANO;
                 var dataAposentadoria2 = dataInscricao.AddYears(10);
 
                 dataAposentadoria = DateTime.Compare(dataAposentadoria, dataAposentadoria2) > 0 ? dataAposentadoria : dataAposentadoria2;
 
-                var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
+                var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAtual : dataAposentadoria;
                 var contribBruta = contribBasica * 2 + contribFacultativa;
                 var taxaMensal = BuscarTaxaMensal(taxaJuros);
 
