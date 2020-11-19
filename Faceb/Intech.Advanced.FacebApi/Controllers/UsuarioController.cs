@@ -62,6 +62,23 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
+                throw new Exception("Por favor, atualize seu aplicativo.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("v3/login")]
+        [AllowAnonymous]
+        public IActionResult LoginV3(
+            [FromServices] SigningConfigurations signingConfigurations,
+            [FromServices] TokenConfigurations tokenConfigurations,
+            [FromBody] dynamic user)
+        {
+            try
+            {
                 string cpf = user.Cpf.Value;
                 string senha = user.Senha.Value;
 
@@ -122,16 +139,17 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
-                var matriculas = new List<string>();
-                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa);
-
-                dadosPessoais
-                    .ForEach(matricula =>
+                var contratosTrabalho = new ContratoTrabalhoProxy().BuscarPorCpfComPlanoAtivo(Cpf);
+                var listaMatriculas = contratosTrabalho
+                    .GroupBy(x => new { x.NR_REGISTRO, x.NO_EMPRESA })
+                    .Select(x => new
                     {
-                        matriculas.Add(matricula.NR_REGISTRO);
-                    });
+                        Matricula = x.Key.NR_REGISTRO,
+                        Empresa = x.Key.NO_EMPRESA
+                    })
+                    .ToList();
 
-                return Ok(matriculas);
+                return Ok(listaMatriculas);
             }
             catch (Exception ex)
             {
@@ -148,13 +166,14 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
-                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).Single(x => x.NR_REGISTRO == matricula);
+                var contratos = new ContratoTrabalhoProxy().BuscarMatriculasPorCpf(Cpf).Single(x => x.NR_REGISTRO == matricula);
+                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(contratos.CD_PESSOA).First();
 
                 var sqContratoTrabalho = dadosPessoais.SQ_CONTRATO_TRABALHO.ToString();
 
                 var claims = new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Cpf", Cpf),
-                    new KeyValuePair<string, string>("CdPessoa", CdPessoa.ToString()),
+                    new KeyValuePair<string, string>("Cpf", dadosPessoais.NR_CPF),
+                    new KeyValuePair<string, string>("CdPessoa", contratos.CD_PESSOA.ToString()),
                     new KeyValuePair<string, string>("Admin", Admin.ToString()),
                     new KeyValuePair<string, string>("SqContratoTrabalho", sqContratoTrabalho),
                     new KeyValuePair<string, string>("Pensionista", Pensionista.ToString())

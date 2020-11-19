@@ -14,6 +14,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronograma.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\BuscarPorPlanoContratoTrabalhoCronogramaRecebedor.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\ContratoTrabalho\BuscarPorCpfComPlanoAtivo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\BuscarPorPlanoContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\BuscarDependentePorCdPessoa.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\BuscarPensionistaPorCdPessoa.sql" />
@@ -24,10 +25,12 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\BuscarPorTabelaIdadeSexo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\BuscarUltimo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\HistManutContribuicao\BuscarUltimoPorContratoTrabalho.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\HistValoresProcesso\BuscarPorCpfPlano.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndice.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarPorCdIndicePeriodo.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Indice\BuscarUltimoPorCdIndice.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Noticia\Buscar.sql" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\ContratoTrabalho\BuscarMatriculasPorCpf.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\BuscarPorContratoTrabalhoPlano.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\ListarPorContratoTrabalho.sql" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\ListarPorCpf.sql" />
@@ -48,12 +51,14 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Scripts\CalendarioPgt\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Contracheque\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\ContratoTrabalho\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Contribuicao\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\DadosPessoais\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Dependente\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\FatorAtuarialMortalidade\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\FatorValidade\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\HistManutContribuicao\entidade.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\HistValoresProcesso\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Indice\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\Noticia\entidade.json" />
     <Content Include="$(MSBuildThisFileDirectory)Scripts\PlanoVinculado\entidade.json" />
@@ -67,12 +72,14 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DAO\CalendarioPgtDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ContrachequeDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\ContratoTrabalhoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\ContribuicaoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\DadosPessoaisDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\DependenteDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\FatorAtuarialMortalidadeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\FatorValidadeDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\HistManutContribuicaoDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAO\HistValoresProcessoDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\IndiceDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\NoticiaDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAO\PlanoVinculadoDAO.cs" />

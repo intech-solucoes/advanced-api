@@ -24,13 +24,13 @@ namespace Intech.Advanced.BaseApi
             }
         }
 
-        [HttpGet("saldoCD")]
+        [HttpGet("saldoCD/{sqPlanoPrevidencial}")]
         [Authorize("Bearer")]
-        public IActionResult GetSaldoCD()
+        public IActionResult GetSaldoCD(int sqPlanoPrevidencial)
         {
             try
             {
-                return Json(new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, 3, CdPessoa));
+                return Json(new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlanoPrevidencial, CdPessoa));
             }
             catch (Exception ex)
             {

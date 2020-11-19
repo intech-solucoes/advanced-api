@@ -1,6 +1,7 @@
 #region Usings
 using Intech.Advanced.Dados.DAO;
 using Intech.Advanced.Entidades;
+using System;
 using System.Security.Cryptography;
 using System.Text; 
 #endregion
@@ -13,6 +14,8 @@ namespace Intech.Advanced.Negocio.Proxy
         {
             // Busca usuario existente para utilizar o USR_CODIGO
             var user = base.BuscarPorCPF(USR_LOGIN);
+            if(user == null)
+                throw new Exception("Matrícula ou senha incorretos!");
 
             // Concatena o USR_CODIGO com a senha e encripta utilizando MD5
             var senha = GerarHashMd5(user.USR_CODIGO + USR_SENHA);

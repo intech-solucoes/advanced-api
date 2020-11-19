@@ -18,23 +18,29 @@ namespace Intech.Advanced.FacebApi.Controllers
     [ApiController]
     public class SimuladorCDController : BaseController
     {
-        [HttpGet]
+        public List<KeyValuePair<string, string>> MemoriaCalculo { get; set; } = new List<KeyValuePair<string, string>>();
+
+        public void Add(string chave, string valor) =>
+            MemoriaCalculo.Add(new KeyValuePair<string, string>(chave, valor));
+
+        [HttpGet("{sqPlanoPrevidencial}")]
         [Authorize("Bearer")]
-        public IActionResult Get()
+        public IActionResult Get(int sqPlanoPrevidencial)
         {
             try
             {
                 //TODO: Jogar pra proxy
 
-                var sqPlano = 3;
+                var contribuicoes = new ContribuicaoProxy().BuscarPorPlanoContratoTrabalho(SqContratoTrabalho, sqPlanoPrevidencial).ToList();
 
-                var contribuicoes = new ContribuicaoProxy().BuscarPorPlanoContratoTrabalho(SqContratoTrabalho, sqPlano);
+                if (contribuicoes.Count == 0)
+                    throw new Exception("Não foram encontradas nenhuma contribuição para este plano.");
 
                 // Data de referência do salário de participação
                 var dataReferencia = contribuicoes.First().DT_REFERENCIA;
 
                 // Busca o salário de participação
-                var salarioContribuicao = new SalarioContribuicaoProxy().BuscarUltimoPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
+                var salarioContribuicao = new SalarioContribuicaoProxy().BuscarUltimoPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlanoPrevidencial);
                 var salarioParticipacao = salarioContribuicao.VL_BASE_FUNDACAO;
 
                 // Busca o percentual de contribuição
@@ -54,19 +60,18 @@ namespace Intech.Advanced.FacebApi.Controllers
             }
         }
 
-        [HttpGet("passo2")]
+        [HttpGet("passo2/{sqPlanoPrevidencial}")]
         [Authorize("Bearer")]
-        public IActionResult GetPasso2()
+        public IActionResult GetPasso2(int sqPlanoPrevidencial)
         {
             try
             {
                 //TODO: Jogar pra proxy
 
-                var sqPlano = 3;
                 var idadeMinimaAposentadoria = 48;
                 var idadeMaximaAposentadoria = 70;
 
-                var saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
+                var saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlanoPrevidencial, CdPessoa).Total;
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
 
                 var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First().DT_NASCIMENTO.Value;
@@ -89,9 +94,9 @@ namespace Intech.Advanced.FacebApi.Controllers
             }
         }
 
-        [HttpPost("simular")]
+        [HttpPost("simular/{sqPlanoPrevidencial}")]
         [Authorize("Bearer")]
-        public IActionResult GetSimulacao([FromBody] dynamic dados)
+        public IActionResult GetSimulacao(int sqPlanoPrevidencial, [FromBody] dynamic dados)
         {
             try
             {
@@ -101,43 +106,64 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First();
                 int idadeAposentadoria = Convert.ToInt32(dados.idadeAposentadoria);
+                Add("Idade Aposentadoria", idadeAposentadoria.ToString());
+
                 decimal contribBasica = Convert.ToDecimal(dados.contribBasica, new CultureInfo("pt-BR"));
+                Add("Contribuição Básica", contribBasica.ToString());
+
                 decimal contribFacultativa = Convert.ToDecimal(dados.contribFacultativa, new CultureInfo("pt-BR"));
+                Add("Contribuição Facultativa", contribFacultativa.ToString());
 
                 decimal saldo = new SaldoProxy().BuscarSaldoCD(DateTime.Now, SqContratoTrabalho, sqPlano, CdPessoa).Total;
+                Add($"Saldo em {DateTime.Now:dd/MM/yyyy}", saldo.ToString());
+
                 var taxaJuros = new FatorValidadeProxy().BuscarUltimo().VL_TX_JUROS;
+                Add($"Taxa de Juros", taxaJuros.ToString());
 
                 var dataAtual = DateTime.Now;//.PrimeiroDiaDoMes();
                 var dataNascimento = new DadosPessoaisProxy().BuscarPorCdPessoa(CdPessoa).First().DT_NASCIMENTO.Value;
 
                 var dataAposentadoria = dataNascimento.AddYears(idadeAposentadoria);
+                Add($"Data de Aposentadoria por Idade", dataAposentadoria.ToString("dd/MM/yyyy"));
 
                 var plano = new PlanoVinculadoProxy().BuscarPorContratoTrabalhoPlano(SqContratoTrabalho, sqPlano);
                 var dataInscricao = plano.DT_INSC_ANTERIOR ?? plano.DT_INSC_PLANO;
+                Add($"Data de Inscrição", dataInscricao.ToString("dd/MM/yyyy"));
+
                 var dataAposentadoria2 = dataInscricao.AddYears(10);
+                Add($"Data de Aposentadoria por Tempo de Plano", dataAposentadoria2.ToString("dd/MM/yyyy"));
 
                 dataAposentadoria = DateTime.Compare(dataAposentadoria, dataAposentadoria2) > 0 ? dataAposentadoria : dataAposentadoria2;
+                Add($"Data de Aposentadoria Real", dataAposentadoria.ToString("dd/MM/yyyy"));
 
-                var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAtual : dataAposentadoria;
+                var data = DateTime.Compare(dataAtual, dataAposentadoria) > 0 ? dataAposentadoria : dataAtual;
                 var contribBruta = contribBasica * 2 + contribFacultativa;
+                Add($"Contribuição Bruta", $"{contribBasica} * 2 + {contribFacultativa} = {contribBruta}");
+
                 var taxaMensal = BuscarTaxaMensal(taxaJuros);
+                Add($"Taxa Mensal", taxaMensal.ToString());
 
                 var valorFuturo = saldo;
 
-                while (data <= dataAposentadoria)
+                while (data < dataAposentadoria)
                 {
+                    var decimoTerceiro = data.Month == 12;
                     var contribMensal = contribBruta;
 
-                    if (data.Month == 12)
+                    if (decimoTerceiro)
                         contribMensal *= 2;
 
+                    var valorFuturoAtual = valorFuturo;
                     valorFuturo = (valorFuturo + (valorFuturo * taxaMensal / 100)) + contribMensal;
+
+                    Add($"Saldo em {data:dd/MM/yyyy}", $"({valorFuturoAtual} + ({valorFuturoAtual} * {taxaMensal} / 100)) + {contribMensal} = {valorFuturo}");
 
                     data = data.AddMonths(1);
                 }
 
                 // Valor do saque
                 var valorSaque = valorFuturo / 100 * (decimal)dados.saque;
+                Add($"Valor Saque", $"{valorFuturo} / 100 * {(decimal)dados.saque} = {valorSaque}");
 
                 // Dependentes
                 var idadeDependente = 0;
@@ -186,6 +212,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                 // Fator atuarial
                 var fatorAtuarialProxy = new FatorAtuarialMortalidadeProxy();
                 var axiPar = fatorAtuarialProxy.BuscarPorIdadeSexo(idadeAposentadoria, dadosPessoais.IR_SEXO).VL_FATOR_A.Value;
+                Add("Fator AXI", axiPar.ToString());
 
                 var axiDep = 0M;
                 var axyi = 0M;
@@ -194,6 +221,7 @@ namespace Intech.Advanced.FacebApi.Controllers
                     axiDep = fatorAtuarialProxy.BuscarPorIdadeSexo(idadeDependente, sexoDependente).VL_FATOR_A.Value;
                     var fator = fatorAtuarialProxy.BuscarPorIdadePartIdadeDepSexo(idadeAposentadoria, idadeDependente, sexoDependente);
                     axyi = fator.VL_FATOR_A.Value;
+                    Add("Fator AXYI", axyi.ToString());
                 }
 
                 var prazoDepentendeTemporario = 20 - idadeDependenteTemporario;
@@ -201,21 +229,31 @@ namespace Intech.Advanced.FacebApi.Controllers
 
                 var fatorDxn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("lxdx", xn, dadosPessoais.IR_SEXO).VL_FATOR_B.Value;
                 var fatorDx = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("lxdx", idadeAposentadoria, dadosPessoais.IR_SEXO).VL_FATOR_B.Value;
-
                 var fatorAxn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("ax", xn, dadosPessoais.IR_SEXO).VL_FATOR_A.Value;
+                Add("Fator Dxn", fatorDxn.ToString());
+                Add("Fator Dx", fatorDx.ToString());
+                Add("Fator Axn", fatorAxn.ToString());
 
                 decimal fatorAn = 0;
                 if (prazoDepentendeTemporario > 0 && !string.IsNullOrEmpty(sexoDependente))
+                {
                     fatorAn = fatorAtuarialProxy.BuscarPorTabelaIdadeSexo("an", prazoDepentendeTemporario, sexoDependente).VL_FATOR_A.Value;
+                    Add("Fator Axn", fatorAn.ToString());
+                }
 
                 var apuracaoAxn = axiPar - (fatorDxn / fatorDx) * fatorAxn;
+                Add("Apuração Axn", $"{axiPar} - ({fatorDxn} / {fatorDx}) * {fatorAxn} = {apuracaoAxn}");
 
                 var fatorAtuarialSemPensaoMorte = 13 * axiPar;
                 var fatorAtuarialPensaoMorte = 13 * (axiPar + Math.Max(fatorAn - apuracaoAxn, axiDep - axyi));
-                
+                Add("Fator Atuarial Sem Pensão de Morte", $"13 * {axiPar} = {fatorAtuarialSemPensaoMorte}");
+                Add("Fator Atuarial Com Pensão de Morte", $"13 * ({axiPar} + {Math.Max(fatorAn - apuracaoAxn, axiDep - axyi)} = {fatorAtuarialPensaoMorte}");
+
                 // Renda por prazos indeterminados
-                var rendaPrazoIndeterminadoPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialPensaoMorte;
                 var rendaPrazoIndeterminadoSemPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialSemPensaoMorte;
+                var rendaPrazoIndeterminadoPensaoMorte = (valorFuturo - valorSaque) / fatorAtuarialPensaoMorte;
+                Add("Renda Prazo Indeterminado Sem Pensão de Morte", $"({valorFuturo} - {valorSaque}) / {fatorAtuarialSemPensaoMorte} = {rendaPrazoIndeterminadoSemPensaoMorte}");
+                Add("Renda Prazo Indeterminado Com Pensão de Morte", $"({valorFuturo} - {valorSaque}) / {fatorAtuarialPensaoMorte} = {rendaPrazoIndeterminadoPensaoMorte}");
 
                 // Renda por prazo certo
                 var listaPrazos = new List<KeyValuePair<int, decimal>>();
@@ -246,7 +284,8 @@ namespace Intech.Advanced.FacebApi.Controllers
                     rendaPrazoIndeterminadoPensaoMorte,
                     rendaPrazoIndeterminadoSemPensaoMorte,
                     listaPrazos,
-                    listaSaldoPercentuais
+                    listaSaldoPercentuais,
+                    memoria = MemoriaCalculo
                 });
             }
             catch (Exception ex)

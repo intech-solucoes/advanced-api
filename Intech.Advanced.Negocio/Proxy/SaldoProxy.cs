@@ -46,16 +46,20 @@ namespace Intech.Advanced.Negocio.Proxy
 
             var indice = new IndiceProxy().BuscarPorCdIndice(plano.CD_INDICE_VALORIZACAO);
 
-            var valorContribIndividalAtualizado = saldoIndividual.QT_COTA_CONTRIBUICAO.Value * indice.First().VL_INDICE.Value;
-            var valorContribPatronalAtualizado = saldoPatronal.QT_COTA_CONTRIBUICAO.Value * indice.First().VL_INDICE.Value;
+            var valorSaldoIndividual = saldoIndividual.QT_COTA_CONTRIBUICAO ?? 0;
+            var valorsaldoPatronal = saldoPatronal.QT_COTA_CONTRIBUICAO ?? 0;
+
+            var valorContribIndividalAtualizado = (valorSaldoIndividual) * indice.First().VL_INDICE.Value;
+            var valorContribPatronalAtualizado = (valorsaldoPatronal) * indice.First().VL_INDICE.Value;
             var valorTotal = valorContribIndividalAtualizado + valorContribPatronalAtualizado;
+            var rentabilidade = valorTotal - (saldoIndividual.VL_CONTRIBUICAO + saldoPatronal.VL_CONTRIBUICAO);
 
             return new
             {
-                SaldoIndividual = saldoIndividual.VL_CONTRIBUICAO.Value,
-                SaldoPatronal = saldoPatronal.VL_CONTRIBUICAO.Value,
-                Total = valorTotal,
-                Rentabilidade = valorTotal - (saldoIndividual.VL_CONTRIBUICAO.Value + saldoPatronal.VL_CONTRIBUICAO.Value)
+                SaldoIndividual = saldoIndividual.VL_CONTRIBUICAO,
+                SaldoPatronal = saldoPatronal.VL_CONTRIBUICAO,
+                Total = (saldoIndividual.VL_CONTRIBUICAO + saldoPatronal.VL_CONTRIBUICAO) + rentabilidade,
+                Rentabilidade = rentabilidade
             };
         }
     }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>2.2.1</Version>
+    <Version>2.3.4</Version>
     <UserSecretsId>2a51fe81-02f9-41cb-bb6a-7ef52131bab3</UserSecretsId>
   </PropertyGroup>
 
@@ -10,12 +10,17 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Intech.Lib.Dapper" Version="1.1.1" />
-    <PackageReference Include="Intech.Lib.Email" Version="1.1.1" />
+    <PackageReference Include="Dapper.Contrib" Version="2.0.35" />
+    <PackageReference Include="Intech.Lib.Dapper" Version="1.2.0" />
+    <PackageReference Include="Intech.Lib.Email" Version="2.0.0" />
     <PackageReference Include="Intech.Lib.JWT" Version="1.1.2" />
-    <PackageReference Include="Intech.Lib.Util" Version="1.1.1" />
+    <PackageReference Include="Intech.Lib.Util" Version="1.3.1" />
+    <PackageReference Include="Intech.Lib.Web" Version="1.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.100" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <Import Project="..\..\Intech.Advanced.BaseApi\Intech.Advanced.BaseApi.projitems" Label="Shared" />
