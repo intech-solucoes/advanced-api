@@ -166,28 +166,35 @@ namespace Intech.Advanced.FacebApi.Controllers
         {
             try
             {
-                var contratos = new ContratoTrabalhoProxy().BuscarMatriculasPorCpf(Cpf).Single(x => x.NR_REGISTRO == matricula);
-                var dadosPessoais = new DadosPessoaisProxy().BuscarPorCdPessoa(contratos.CD_PESSOA).First();
+                bool pensionista = false;
 
-                var sqContratoTrabalho = dadosPessoais.SQ_CONTRATO_TRABALHO.ToString();
+                var usuario = new UsuarioProxy().BuscarPorCPF(Cpf);
+
+                var contratoTrabalho = new ContratoTrabalhoProxy().BuscarPorCpfComPlanoAtivo(Cpf).First(x => x.NR_REGISTRO == matricula);
+                var cdPessoa = contratoTrabalho.CD_PESSOA;
+                var sqContratoTrabalho = contratoTrabalho.SQ_CONTRATO_TRABALHO;
+
+                var processo = new ProcessoBeneficioProxy().BuscarPorCdPessoa(cdPessoa);
+                if (processo != null)
+                {
+                    pensionista = true;
+                    sqContratoTrabalho = processo.SQ_CONTRATO_TRABALHO.Value;
+                }
 
                 var claims = new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Cpf", dadosPessoais.NR_CPF),
-                    new KeyValuePair<string, string>("CdPessoa", contratos.CD_PESSOA.ToString()),
-                    new KeyValuePair<string, string>("Admin", Admin.ToString()),
-                    new KeyValuePair<string, string>("SqContratoTrabalho", sqContratoTrabalho),
-                    new KeyValuePair<string, string>("Pensionista", Pensionista.ToString())
+                    new KeyValuePair<string, string>("Cpf", Cpf),
+                    new KeyValuePair<string, string>("CdPessoa", cdPessoa.ToString()),
+                    new KeyValuePair<string, string>("Admin", Admin ? "S" : "N"),
+                    new KeyValuePair<string, string>("SqContratoTrabalho", sqContratoTrabalho.ToString()),
+                    new KeyValuePair<string, string>("Pensionista", pensionista.ToString())
                 };
 
                 var token = AuthenticationToken.Generate(signingConfigurations, tokenConfigurations, Cpf, claims);
-                return Json(new
+
+                return Ok(new
                 {
                     token.AccessToken,
-                    token.Authenticated,
-                    token.Created,
-                    token.Expiration,
-                    token.Message,
-                    Pensionista
+                    Pensionista = pensionista
                 });
             }
             catch (Exception ex)
