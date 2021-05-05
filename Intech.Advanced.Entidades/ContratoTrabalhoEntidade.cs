@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 
@@ -49,5 +49,6 @@ namespace Intech.Advanced.Entidades
 		[Write(false)] public string NR_CELULAR { get; set; }
 		[Write(false)] public string NO_EMAIL { get; set; }
 		[Write(false)] public string NO_EMPRESA { get; set; }
+		[Write(false)] public TesteEntidade Teste { get; set; }
 	}
 }

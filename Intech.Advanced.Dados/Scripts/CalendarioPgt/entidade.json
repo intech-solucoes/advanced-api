@@ -1,5 +1,3 @@
 {
-  "NomeTabela": "WEB_CALENDARIO_PGT",
-  "ColunasExtras": [],
-  "Imports": []
+  "nomeTabela": "WEB_CALENDARIO_PGT"
 }

@@ -1,9 +1,9 @@
-﻿/*Config
+﻿/*
     RetornaLista
     Retorno
-        -CalendarioPgtEntidade
+        CalendarioPgtEntidade
     Parametros
-        -CD_PLANO:string
+        CD_PLANO:string
 */
 
 SELECT *

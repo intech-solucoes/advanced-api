@@ -1,4 +1,4 @@
-﻿using Intech.Advanced.Dados.DAO;
+using Intech.Advanced.Dados.DAO;
 using System.Data;
 
 namespace Intech.Advanced.Negocio.Proxy

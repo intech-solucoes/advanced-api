@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 
 namespace Intech.Advanced.Entidades
 {
-    [Table("FI_FICHA_FINANC_ASSISTIDO")]
-    public class ContrachequeEntidade
-    {
+	[Table("FI_FICHA_FINANC_ASSISTIDO")]
+	public class ContrachequeEntidade
+	{
 		[Key]
 		public int SQ_FICHA { get; set; }
 		public int SQ_PROCESSO { get; set; }
@@ -21,8 +21,8 @@ namespace Intech.Advanced.Entidades
 		public int? NR_PARCELA { get; set; }
 		public int? QT_PARCELA { get; set; }
 		public string IR_LANCAMENTO { get; set; }
+		public string DS_REFR { get; set; }
 		[Write(false)] public DateTime? DT_REFERENCIA { get; set; }
 		[Write(false)] public string DS_RUBRICA { get; set; }
-        
-    }
+	}
 }
